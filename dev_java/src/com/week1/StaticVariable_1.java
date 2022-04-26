@@ -7,6 +7,8 @@ public class StaticVariable_1 {
 		System.out.println(pi);
 		pi = pi + 1;
 		System.out.println(StaticVariable_1.pi);
+//		pi = pi + 1;
+//		System.out.println(pi);
 	}
 
 }
