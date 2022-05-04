@@ -15,7 +15,8 @@ public class JTextAreaSample_1 implements ActionListener{
 	public void initDisplay() {
 		jtf.addActionListener(this);
 		jf.setTitle("JTextArea샘플");
-		jtf.setBackground(Color.lightGray);
+		jtf.setBackground(Color.yellow);
+//		jta.setBackground(Color.green);
 		jf.add("Center", jta);
 		jf.add("South", jtf);
 		jf.setSize(300, 400);

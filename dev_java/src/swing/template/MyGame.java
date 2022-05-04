@@ -17,7 +17,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class JTextAreaSample_4 implements ActionListener{
+public class MyGame implements ActionListener{
 	JMenuBar    jmb			= new JMenuBar();
 	JMenu       jm_file		= new JMenu("File");
 	JMenuItem   jmi_new		= new JMenuItem("New");
@@ -32,6 +32,7 @@ public class JTextAreaSample_4 implements ActionListener{
 	JMenuItem   jmi_out 	= new JMenuItem("나가기");
 	JFrame      jf			= new JFrame();
 	JPanel 	    jp_center 	= new JPanel();
+	JPanel 		table 		= new JPanel();
 	JTextArea 	jta 		= new JTextArea();
 	JScrollPane jsp 		= new JScrollPane(jta
 			, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
@@ -59,8 +60,12 @@ public class JTextAreaSample_4 implements ActionListener{
 		jf.setTitle("JTextArea샘플");
 		jtf.setBackground(Color.lightGray); //텍스트 필드의 배경색 결정
 		jp_center.setLayout(new BorderLayout()); //보더 레이아웃을 배치 관리자로 설정
+		//컴포넌트를 컨테이너에 추가할 때 레이아웃의 위치를 지정
 		jp_center.add("Center", jsp);
 		jp_center.add("South", jtf);
+		table.setLayout(new BorderLayout());
+		//
+		jp_center.add("West", table);
 		jf.add("Center", jp_center);
 		jp_east.setLayout(new GridLayout(4,1));
 		jp_east.add(jbtn_new);
@@ -72,8 +77,8 @@ public class JTextAreaSample_4 implements ActionListener{
 		jf.setVisible(true);
 	}
 	public static void main(String[] args) {
-		JTextAreaSample_4 jtas = new JTextAreaSample_4();
-		jtas.initDisplay();
+		MyGame mg = new MyGame();
+		mg.initDisplay();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
