@@ -4,13 +4,29 @@ import java.util.Scanner;
 
 public class BaseBallGameDemo3 {
 	int my[] = new int[3];
+	// 컴터가 채번한 숫자를 담을 배열 선언
+	int com[] = new int[3];
+
+	// 0부터 9사이의 중복을 제거하는 3자리 숫자 채번하기
+	public void nanSu() {
+		// 0.0~1.0 -> 0.0~10.0
+		com[0] = (int) (Math.random() * 10);
+		do {
+			com[1] = (int) (Math.random() * 10);
+		} while (com[0] == com[1]);
+		do {
+			com[2] = (int) (Math.random() * 10);
+		} while (com[0] == com[1] || com[1] == com[2]);
+	}
+
+	// 왜 파라미터를 String으로 했니? - 왜냐하면 화면에서 입력 받을 때 숫자를 쳐도 문자열로 취급되니까 "245"
 	public String account(String input) {
 		System.out.println("사용자가 입력한 값 받아오기: " + input);
-		//length: 배열의 원소갯수
-		//length(): 문자열의 갯수
-		if(input.length() != 3) {
-			//반복문을 탈출할 떄는 break;
-			//조건문을 탈출시는 return
+		// length: 배열의 원소갯수
+		// length(): 문자열의 갯수
+		if (input.length() != 3) {
+			// 반복문을 탈출할 떄는 break;
+			// 조건문을 탈출시는 return
 			return "세자리 숫자를 입력하세요.";
 		}
 		int temp = 0;
@@ -19,14 +35,15 @@ public class BaseBallGameDemo3 {
 		} catch (NumberFormatException ex) {
 			return "숫자만 입력하세요.";
 		}
-		my[0] = temp/100; //579/100 = 5.79 => 5-백의자리
-		my[1] = (temp%100)/10; //7
-		my[2] = temp%10; //57.9 => 9 - 일의자리
-		for(int val:my) {
+		my[0] = temp / 100; // 579/100 = 5.79 => 5-백의자리
+		my[1] = (temp % 100) / 10; // 7
+		my[2] = temp % 10; // 57.9 => 9 - 일의자리
+		for (int val : my) {
 			System.out.println(val);
 		}
 		return "1스 0볼";
 	}
+
 	public static void main(String[] args) {
 		BaseBallGameDemo3 bbg = new BaseBallGameDemo3();
 		Scanner sc = new Scanner(System.in);
