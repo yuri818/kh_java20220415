@@ -11,13 +11,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class JTableSample_1 implements ActionListener {
+public class JTableSample_my implements ActionListener {
 	//윈도우 운영체제에서 창을 생성하기
 	JFrame jf = new JFrame();
 	//테이블의 헤더를 구성할 때 사용할 1차 배열 선언
-	String cols[] = {"HTML","java","총점"};
+	String cols[] = {"HTML","java","오라클","총점"};
 	//JTable은 테이블 양식만 제공할 뿐 실제 데이터를 담는 클래스는 DefaultTabelModel이다.
-	String data[][] = new String[3][3];
+	String data[][] = new String[1][4];
 	//만일 값을 접근하려면 DefaultTableModel 안에 데이터 셋이 있다.
 	DefaultTableModel dtm = new DefaultTableModel(data, cols);
 	//나는 양식일 뿐이야 데이터를 가지고 있지 않아.
@@ -53,13 +53,12 @@ public class JTableSample_1 implements ActionListener {
 		if(obj == jbtn_account) {
 			String html = (String)(dtm.getValueAt(0, 0));
 			String java = (String)(dtm.getValueAt(0, 1));
-//			String oracle = (String)(dtm.getValueAt(0, 2));
-			System.out.println("html점수: " + html + ", java점수: " + java );
-//			dtm.setValueAt(html, 0, 2);
+			String oracle = (String)(dtm.getValueAt(0, 2));
+			System.out.println("html점수: " + html + ", java점수: " + java +", 오라클 점수: " + oracle);
 			int html1 = Integer.parseInt(html);
 			int java1 = Integer.parseInt(java);
-//			int oracle1 = Integer.parseInt(oracle);
-			dtm.setValueAt(html1+java1, 0, 2);
+			int oracle1 = Integer.parseInt(oracle);
+			dtm.setValueAt(html1+java1, 0, 3);
 		} else if(obj == jbtn_exit) {
 			System.out.println("프로그램을 종료합니다.");
 		} else if(obj == jbtn_add) {

@@ -1,5 +1,9 @@
 package network.step1;
-
+//자바 통해 웹서버에서 응답받을 수 있다.
+//웹 서버에 접근할 떄는 도메인이 필요함
+//값을 받아온걸 변수에 담아야한다.
+//id => String , 위도와 경도와 풍속 double 
+//입출력 담당하는 InputStream 이라는 별도의 서버가 필요하다.
 import java.net.*; 
 import java.io.*; 
 import java.util.*; 

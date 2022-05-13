@@ -45,6 +45,6 @@ public class UnicastClient {
 		return tcpSocket;
 	}
 	public static void main(String args[]) throws Exception{
-		new UnicastClient("localhost", 3000);
+		new UnicastClient("192.168.40.35", 3000); //여기에 ip주소 적어라.
 	}
 }
