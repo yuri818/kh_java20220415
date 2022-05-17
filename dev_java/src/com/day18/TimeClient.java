@@ -30,7 +30,8 @@ public class TimeClient extends Thread {
 		try {
 			//클라이언트측에서 아래 인스턴스화가 실행되면 ServerSocket에 정보가 전달 됨 - 접속이 됨.
 			//1.서버측의 IP주소를 넣어야 한다. 두번째는 포트번호
-			socket = new Socket("192.168.40.11", 9877);
+			//localhost == 127.0.0.1 로컬 host이름이다.
+			socket = new Socket("127.0.0.1", 9877);
 			//생성된 소켓이 있어야 출력을 담당하는 객체를 생성할 수 있다.
 			//생성자 파라미터 자리에 소켓.getOutputStream()으로 객체 생성됨 - 말하기 -쓰기(현재시간정보를 소켓에 쓴다.)
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -39,10 +40,10 @@ public class TimeClient extends Thread {
 			while (true) {
 				timeStr = ois.readObject().toString();
 				System.out.println(timeStr);
-				label.setText(timeStr);
+				label.setText(timeStr); 
 				// Thread.yield();
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(1000); //1초마다 새로고침한다.
 				} catch (InterruptedException i) {
 				}
 			}
@@ -62,9 +63,10 @@ public class TimeClient extends Thread {
 
 	// run() 종료
 	public static void main(String args[]) {
+		//여러 스레드가 중지상태 혹은 준비상태에 있을 수 있어서 순선를 따진 후
+		//실행되어야 한다.
 		TimeClient tc = new TimeClient();
-		tc.start();
-
+		tc.start(); //run()호출이 된다. - Thread검색 start()
 	}
 
 }
