@@ -25,7 +25,7 @@ public class BinDoTemplate {
 		int nanSus[] = new int[100];
 		int pCount[] = new int[10];
 		//insert here
-		initArray(nanSus, 100);
+		initArray(nanSus, 100); //100을 nanSus.length
 		numberCount(nanSus, 100, pCount);
 		print10PerLine(nanSus, 100);
 		printResult(pCount, 10);
