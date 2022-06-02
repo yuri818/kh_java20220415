@@ -24,7 +24,7 @@ public class LoginDao extends JFrame implements ActionListener {
 	public LoginDao() {
 		jbtn_check.addActionListener(this);
 		//화면을 그리는 메소드 호출
-		initDisplay();
+//		initDisplay();
 	}
 	public void initDisplay() {
 		jp_north.setLayout(new BorderLayout());
@@ -36,6 +36,58 @@ public class LoginDao extends JFrame implements ActionListener {
 		this.setSize(500, 300);
 		this.setVisible(true);
 	}
+	/********************************************************************
+	 * 
+	 * @param mem_id - 사용자가 입력한 아이디 받아오기
+	 * @param mem_pw - 사용자가 입력한 비번 받아오기
+	 * @return
+	 */
+	public String login(String mem_id, String mem_pw) {
+		String mem_name = null;
+		// 물리적으로 떨어져 있는 오라클 서버와 연결통로 만들기
+		Connection con = null;
+		// 오라클 서버에 작성한 select문 전달하고 오라클 서버에 처리 요청할 때 사용
+		PreparedStatement pstmt = null;
+		// 조회 결과를 자바코드로 가져올 때 필요 - 오라클 서버의 커서를 조작하는데 필요함.
+		ResultSet rs = null;
+		String result = "";
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT													");
+        sql.append("		result3                                          ");
+        sql.append("  FROM (                                                ");
+        sql.append("		 SELECT                                         ");
+        sql.append("		 		CASE WHEN mem_id=? THEN                 ");
+        sql.append("		 			CASE WHEN mem_pw=? THEN mem_name           ");
+        sql.append("		 			  ELSE '0'                            ");
+        sql.append("		 			END                                 ");
+        sql.append("		 	      ELSE '-1'                               ");
+        sql.append("		 	    END as result3                           ");
+        sql.append("		  FROM member                                   ");
+        sql.append("		ORDER BY result3 desc                            ");
+        sql.append("		)                                               ");
+        sql.append(" WHERE rownum = 1                                       ");
+		DBConnectionMgr dbMgr = new DBConnectionMgr();
+		try {
+			con = dbMgr.getConnection();
+			// ?자리에 들어갈 아이디를 설정해야 함
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, mem_id);
+			pstmt.setString(2, mem_pw);
+			// select처리 시는 executeQuery()호출
+			// insert, update, delete 처리시는 executeUpdate()호출
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				System.out.println("결과");
+				mem_name = rs.getString(1);
+				System.out.println("mem_name:"+mem_name);				
+			}
+			System.out.println("mem_name1 : " + mem_name);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return mem_name;
+	}
+
 	/***********************************************************************
 	 * 아이디 중복 체크
 	 * @param mem_id - 사용자가 입력한 아이디
@@ -79,6 +131,7 @@ public class LoginDao extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		LoginDao ld = new LoginDao();
+		ld.initDisplay();
 
 	}
 	@Override
