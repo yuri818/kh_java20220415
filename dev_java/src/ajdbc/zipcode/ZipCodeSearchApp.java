@@ -77,7 +77,7 @@ public class ZipCodeSearchApp extends JFrame implements ItemListener {
 		return zdos;
 	}
 	//콤보박스에 뿌려질 sigu 컬럼의 정보를 오라클 서버에서 꺼내오기
-	public String[] getSIGUList() {
+	public String[] getSIGUList(String zdo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT '전체' sigu FROM dual         ");
 		sql.append("UNION ALL                           ");
@@ -106,7 +106,7 @@ public class ZipCodeSearchApp extends JFrame implements ItemListener {
 		return sigus;
 	}
 	//콤보박스에 뿌려질 DONG 컬럼의 정보를 오라클 서버에서 꺼내오기
-	public String[] getDONGList() {
+	public String[] getDONGList(String sigu) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT '전체' dong FROM dual        ");
 		sql.append("UNION ALL                          ");
@@ -139,8 +139,39 @@ public class ZipCodeSearchApp extends JFrame implements ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		Object obj = e.getSource();
-		//여기 어떻게해????????
-				
+		if (obj == jcb_zdo) {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				System.out.println("선택한 ZDO ===> " + zdos[jcb_zdo.getSelectedIndex()]);
+				zdo = zdos[jcb_zdo.getSelectedIndex()];
+				jcb_sigu.removeAllItems();
+				if ("서울".equals(zdo)) {
+					for (int i = 0; i < sigus.length; i++) {
+						jcb_sigu.addItem(sigus[i]);
+					}
+				} else if ("경기".equals(zdo)) {
+					for (int i = 0; i < sigus.length; i++) {
+						jcb_sigu.addItem(sigus[i]);
+					}
+				}
+			}
+		}
+		
+		 if(obj == jcb_sigu) {
+	            if(e.getStateChange() == ItemEvent.SELECTED) {
+	                //top이 가전이니?
+	                if("서울".equals(zdo)) {
+	                    System.out.println("선택한 MID ===> "+sigus[jcb_sigu.getSelectedIndex()]);
+	                    sigu = sigus[jcb_sigu.getSelectedIndex()];
+	                    System.out.println("mid : "+sigu);
+	                    if("강남구".equals(sigu)) {
+	                        jcb_dong.removeAllItems();
+	                        for(int i=0;i<dongs.length;i++) {
+	                            jcb_dong.addItem(dongs[i]);
+	                        }                       
+	                    }
+	                }
+	            }
+		 }
 	}
 	public void initDisplay() {
 		this.setTitle("우편번호 검색기 Ver1.0");

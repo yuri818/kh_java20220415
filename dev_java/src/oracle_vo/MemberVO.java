@@ -1,10 +1,20 @@
 package oracle_vo;
-//Lombok
-public class MemberVO { //오라클에서 하나의 로우
+//Lombok - setter, getter 생략 - 자동
+//setter - 쓰기, 저장
+//getter - 읽기, 듣기
+//외부에서의 위변조를 막기 위해서 private으로 변수 설정.
+//대신 getter와 setter는 public으로 하여 변경하게함.
+//오라클의 컬럼명과 VO의 전변 이름은 통일
+//오라클 타입과 자바 타입은 맞춘다.
+//예외 발생 - 화면에서 입력 받는 값이 문자열 취급을 함
+//<input type="text">
+public class MemberVO { //오라클에서 하나의 로우 //컬럼명과 변수명을 같이 한다.
 	private int    mem_no   = 0; //
 	private String mem_id   = ""; //
 	private String mem_pw   = ""; //
 	private String mem_name = ""; //
+	private String mem_zipcode = "";
+	private String mem_address = "";
 	
 	int    mem_nos[] = new int[3];
 	String mem_ids[] = new String[3]; //여기는 id만 담을 수 있다.
@@ -44,6 +54,18 @@ public class MemberVO { //오라클에서 하나의 로우
 	}
 	public void setMem_name(String mem_name) {
 		this.mem_name = mem_name;
+	}
+	public String getMem_zipcode() {
+		return mem_zipcode;
+	}
+	public void setMem_zipcode(String mem_zipcode) {
+		this.mem_zipcode = mem_zipcode;
+	}
+	public String getMem_address() {
+		return mem_address;
+	}
+	public void setMem_address(String mem_address) {
+		this.mem_address = mem_address;
 	}
 }
 
