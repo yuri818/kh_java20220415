@@ -44,10 +44,14 @@ public class MemberShip extends JFrame implements ActionListener, MouseListener 
 	JPanel		jp_south		= new JPanel();
 	JButton		jbtn_signup		= new JButton("회원가입");
 	JButton		jbtn_cancel		= new JButton("취소");
-	
+	//MemberShip(MemberApp memberApp) - 생성자에 파라미터로 쓰임.
+	MemberApp 	memberApp		= null;
 	//생성자
 	public MemberShip() {
-		initDisplay();
+//		initDisplay();
+	}
+	public MemberShip(MemberApp memberApp) {
+		this.memberApp = memberApp;
 	}
 	/**********************************************************************************
 	 * 
@@ -131,6 +135,8 @@ public class MemberShip extends JFrame implements ActionListener, MouseListener 
 		//이벤트 소스와 이벤트 처리 핸들러 클래스 연결하기
 		jbtn_idcheck.addActionListener(this);
 		jbtn_signup.addActionListener(this);
+		jbtn_zipcode.addActionListener(this);
+		
 		jp_center.setLayout(null); //null일경우 반영되지 않는다
 		jlb_id.setBounds(20, 20, 100, 20); //x,y,width,height
 		jtf_id.setBounds(120, 20, 100, 20); //x,y,width,height
@@ -213,6 +219,10 @@ public class MemberShip extends JFrame implements ActionListener, MouseListener 
 			if(result == 1) {
 				System.out.println("result ===> "+result);
 				//insert here - 회원가입 성공 후 MemberApp클래스의 새로고침 메소드 호출하기
+				//회원가입이 성공하면 가입화면은 닫아주세요 - dispose();
+				this.dispose();
+				//가입후 새로고침하여 자동으로 확인시켜준다.
+				memberApp.refreshData();
 				
 			}
 		}
@@ -227,8 +237,14 @@ public class MemberShip extends JFrame implements ActionListener, MouseListener 
 				JOptionPane.showMessageDialog(this, "사용할 수 있는 아이디 입니다.","INFO",JOptionPane.INFORMATION_MESSAGE);
 				isOk = true;
 				jbtn_signup.setEnabled(isOk);
-				jbtn_idcheck.setEnabled(!isOk);
+//				jbtn_idcheck.setEnabled(!isOk);
 			}
+		}
+		//우편번호 찾기 버튼 누를거야?
+		else if(obj == jbtn_zipcode) {
+			//!!!!!!!!!!!!!!!!this로 넘겨서 외부에서 재사용하게 할것!!!!!!!!!!!!!!!!!!!!!!!!!!
+			ZipcodeSearch zs = new ZipcodeSearch(this);
+			zs.initDisplay();
 		}
 		
 		
