@@ -10,7 +10,7 @@
 	//  query string or query parameter -> GET 방식이다. 가능. POST는 불가능하다.
 	//  전송방식 - GET(단위테스트 가능), POST 방식은 javascript의 도움이 필요하다.
 	String deptno = request.getParameter("deptno");
-	out.print("요청 파라미터에서 입력 받은 값 => " + deptno);
+	//out.print("요청 파라미터에서 입력 받은 값 => " + deptno);
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
