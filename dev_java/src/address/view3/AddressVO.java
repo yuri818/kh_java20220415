@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class AddressVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+	// 9번부터 17번까지는 테이블에 존재하는 컬럼임
 	private String name;
 	private String address;
 	private String telephone;
@@ -19,7 +19,10 @@ public class AddressVO implements Serializable {
 	// 사용자가 선택한 메뉴 정보 담기
 	// 입력 : insert , 수정 : update, 삭제 : delete
 	// 상세보기 : select, 전체보기 : selectall
-	private String command;
+	
+	// 개발자가 업무처리에 필요한 부분을 담기 우해 선언함
+	// - insert, update, delete, select, selectall
+	private String command; // 입력, 수정, 삭제, 조회
 	// 오라클 서버에서 보내준 입력|수정|삭제 처리 결과를 담을 변수
 	private int result;
 

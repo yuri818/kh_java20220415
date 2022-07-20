@@ -329,6 +329,18 @@ public class AddressBook extends JFrame {
 	// 입력 메뉴나 입력 아이콘 선택시 작업을 정의합니다.
 	private void addActionPerformed(ActionEvent evt) {
 		System.out.println("입력하기");	
+		// AddressBook에서 입력버튼이 눌리면 abook에서 이벤트감지하고
+		// ModifyDialog에 set메소드 호출한다
+		// 호출 할 때 파라미터로는 사용자가 선택한
+		// 버튼의 이름, 화면보여줄까?, AddressVO(왜냐면 새로입력하는거니까)null
+		//, abook의 주소번지(원본-공유-static)- 이태릭체 - static
+		// 1) 하나의 화면으로 입력 or 수정 or 상세조회
+		// 2) 입력, 수정 : 각 입력 컴포넌트가 수정할 수 있는 상태
+		// 	  상세조회 : only read - false
+		// 3) 입력 -> view -> action(insert) -> action(selectall) -> view
+		// 	  수정 -> action(select:1건) ->view->action(update)->action(selectall)->view
+		// 	  상세보기 -> action(select:1건)->view(ModifyDialog)
+		// 4) abook넘긴다 - 단 원본을 넘겨야 한다. 복사본을 만들면 망함
 		mDialog.set("입력", true, null,abook);
 		mDialog.setVisible(true);
 	}
@@ -383,21 +395,25 @@ public class AddressBook extends JFrame {
 	}
 
 	// 전체 데이터를 다시 조회합니다.
+	// SELECT * FROM mkaddrtb
 	public void refreshData() {
 		System.out.println("전체 데이터를 다시 조회합니다.");
-		AddressVO vo = new AddressVO();
-		vo.setCommand("selectall");
-		ctrl = new AddressCtrl(vo);	
+		// 이미 테이블에 조회된 결과가 있다면 모두 삭제처리 먼저 함
+		// 테이블에 관련된 이벤트 처리시 주의사항
+		// 폼에 대한 처리인지 데이터셋에 대한 처리인지 구분
+		while(myTableModel.getRowCount() > 0) {
+			myTableModel.removeRow(0);
+		}
+		
+		// 전체조회 감지되면 이벤트 처리 - refreshData()호출
+//		AddressVO vo = new AddressVO();
+//		vo.setCommand("selectall");
+		// MVC패턴 적용 -> AddressCtrl
+		// 디폴트 생성자로 변경한 이유는 send메소드의 파라미터로 넘길 수 있다.
+		ctrl = new AddressCtrl();
 		// Controller에서 넘겨 받은 전체 데이터를 테이블에 셋팅합니다.
 		vos = ctrl.send();	
 		if(vos == null || vos.length == 0) {
-			vos = new AddressVO[2];	
-			AddressVO rvo = new AddressVO("이순신","서울시 마포구 공덕동","010-555-6677","1"
-					                     ,"고교동창","1990-05-28","Back-End개발자","2022-03-15",1);
-			vos[0] = rvo;
-			rvo = new AddressVO("강감찬","서울시 영등포구 당산동","010-777-6677","1"
-                    ,"대학동창","1992-01-28","Back-End개발자","2022-01-25",2);
-			vos[1] = rvo;
 			for (int i = 0; i < vos.length; i++) {
 				Vector<Object> oneRow = new Vector<>();
 				oneRow.addElement(vos[i].getId());
@@ -406,8 +422,8 @@ public class AddressBook extends JFrame {
 				oneRow.addElement(vos[i].getTelephone());			
 				myTableModel.addRow(oneRow);
 			}
-		}
-	}
+		}/////////////////////end of if
+	}/////////////////////////end of refreshData
 
 }
 

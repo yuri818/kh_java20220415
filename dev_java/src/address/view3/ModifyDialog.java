@@ -181,6 +181,14 @@ class ModifyDialog extends JDialog {
 	}
 
 	// 타이틀, 수정여부, Value Object를 받아서 윈도우를 설정합니다.
+	/**************************************************************************
+	 * 
+	 * @param title - 사용자가 선택한 메뉴에 대한 자식창의 타이틀 값
+	 * @param editable - 이른 인스턴스화 후 입력 컴포넌트에 쓰기를 허용할건가? 아님 읽기전용으로 할건가를 결정함
+	 * 	입력(수정가능), 수정(수정가능) - true, 상세보기(only read) - false
+	 * @param vo - 
+	 * @param abook
+	 ***************************************************************************/
 	public void set(String title, boolean editable, AddressVO vo, AddressBook abook) {
 		this.avo = vo;
 		this.abook = abook;
@@ -190,12 +198,11 @@ class ModifyDialog extends JDialog {
 
 	// 입력, 수정시는 칼럼값을 수정 가능하도록, 조회시는 불가능하게
 	// 셋팅하는 메쏘드입니다.
-	private void setEditable(boolean e) {
-		txtName.setEditable(e);
+	private void setEditable(boolean e) { // 파라미터 boolean true, false
+		// true가 오면 이름을 변경가능함 , false가 오면 변경 불가함
+		txtName.setEditable(e); 
 		txtAddress.setEditable(e);
-		txtTel.setEditable(e);
-		
-		
+		txtTel.setEditable(e);	
 		txtRelationShip.setEditable(e);
 		comboGender.setEnabled(e);
 		txtBirthDay.setEditable(e);
@@ -217,8 +224,10 @@ class ModifyDialog extends JDialog {
 			JOptionPane.showMessageDialog(this, "수정하기에서 확인 입니다.","INFO", JOptionPane.INFORMATION_MESSAGE);		
 			try{
 				AddressVO vo = new AddressVO();	
+				// vo를 send메소드의 파라미터로 넘기는 이유가 뭘까?
+				// 버튼은 AddressBook에 있는데... 처리는 ModifyDialog에서 해야 함
 				vo.setCommand("update");
-				AddressCtrl ctrl = new AddressCtrl(vo);
+				AddressCtrl ctrl = new AddressCtrl();
 				ctrl.send(vo);
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(this, "수정중 에러가 발생했습니다." + e,
@@ -232,8 +241,20 @@ class ModifyDialog extends JDialog {
 				JOptionPane.showMessageDialog(this, "입력하기에서 확인 입니다.","INFO", JOptionPane.INFORMATION_MESSAGE);		
 				AddressVO vo = new AddressVO();	
 				vo.setCommand("insert");
-				AddressCtrl ctrl = new AddressCtrl(vo);
-				ctrl.send(vo);			
+				vo.setName(getName());
+				vo.setAddress(getAddress());
+				vo.setTelephone(getTel());
+				vo.setGender(getGender());
+				vo.setRelationship(getRelationShip());
+				vo.setBirthday(getBirthDay());
+				
+				// 입력이든 수정이든 반드시 AddressCtrl를 경유한다 - 컨벤션(MVC 패턴)
+				AddressCtrl ctrl = new AddressCtrl();
+				// vo안에는 전변이 있다 - 어떻게 읽고(getter) 쓰지(setter)?
+				AddressVO raVO = ctrl.send(vo);			
+				if(raVO.getResult() == 1) {
+					abook.refreshData(); // 새로고침
+				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "입력중 에러가 발생했습니다." + e,
 					"Error", JOptionPane.ERROR_MESSAGE);

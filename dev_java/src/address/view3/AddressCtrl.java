@@ -11,12 +11,11 @@ public class AddressCtrl {
 	private static String _SEL = "select";
 	private static String _ALL = "selectall";
 
-	public AddressCtrl(AddressVO vo) {
-		this.inVO = vo;
+	public AddressCtrl() {
 	}
 
 	public AddressVO send(AddressVO vo) throws Exception {
-		String command = inVO.getCommand();
+		String command = vo.getCommand();
 
 		if (command.equals(_DEL)) {
 			DeleteAddrEty delEty = new DeleteAddrEty();
@@ -39,13 +38,13 @@ public class AddressCtrl {
 
 	public AddressVO[] send() {
 		System.out.println("AddressCtrl send 호출 성공");
-		String command = inVO.getCommand();
-		System.out.println("command ===> " + command);
+//		String command = inVO.getCommand();
+//		System.out.println("command ===> " + command);
 		AddressVO[] returnVOs = null;
-		if (command.equals(_ALL)) {
+//		if (command.equals(_ALL)) {
 			RetrieveAddrEty retEty = new RetrieveAddrEty();
 			returnVOs = retEty.retrieve();			
-		}
+//		}
 		return returnVOs;
 	}
 	
