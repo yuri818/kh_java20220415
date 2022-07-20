@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
+// 입력: insert, 수정:update 있는걸 바꾼다, 상세보기
 class ModifyDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -189,7 +189,13 @@ class ModifyDialog extends JDialog {
 	 * @param vo - 
 	 * @param abook
 	 ***************************************************************************/
+	// 자바 리팩토링
 	public void set(String title, boolean editable, AddressVO vo, AddressBook abook) {
+		// 얘를 밑에 setValue에서 처리해주니까 상세보기에서는 필요없당
+		// 그치만 나머지 입력과 수정에 필요하니까 지우지는 말자
+		// 인줄 알았는데 메소드 다 보니까 필요없네?? - 주석처리 ㄱ
+		// 인줄 알았는데 확인버튼 누를때 비교를 avo랑 하고 있었네ㅔ.. 지우지말장! - 주석 풀어..
+		// 수정 액션 처리할 때(확인버튼 눌렀을 떄 -1)입력(insert), 2)수정(update)
 		this.avo = vo;
 		this.abook = abook;
 		this.set(title, editable);
@@ -210,6 +216,8 @@ class ModifyDialog extends JDialog {
 	}
 
 	// 확인버튼 선택시 작업을 정의합니다.
+	//------------------------ 콜백함수는 원본을 건드리지 않는다.---------------------
+	// 여기서 파라미터로 Address avo 넣어주는짓은 하지 말자
   	private void btnOkayActionPerformed(ActionEvent evt) {
   		if(getName().trim().length() == 0) {
   			JOptionPane.showMessageDialog(this, "이름을 입력하세요.", "Error",
@@ -220,6 +228,7 @@ class ModifyDialog extends JDialog {
 		//수정화면에서 확인버튼을 눌렀을 때와 입력화면에서 확인 버튼을 눌렀을 때
 		//처리하기
 		//아이디가 존재하면 수정 모드, 그렇지 않으면 입력 모드로 처리한다.
+		// -----------`-`-`----------`-여기서 avo 쓰이네....?-----------------
 		if(avo !=null){
 			JOptionPane.showMessageDialog(this, "수정하기에서 확인 입니다.","INFO", JOptionPane.INFORMATION_MESSAGE);		
 			try{
@@ -227,8 +236,21 @@ class ModifyDialog extends JDialog {
 				// vo를 send메소드의 파라미터로 넘기는 이유가 뭘까?
 				// 버튼은 AddressBook에 있는데... 처리는 ModifyDialog에서 해야 함
 				vo.setCommand("update");
+				vo.setName(getName());
+				vo.setAddress(getAddress());
+				vo.setGender(getGender());
+				vo.setRelationship(getRelationShip());
+				vo.setTelephone(getTel());
+				vo.setBirthday(getBirthDay());
+				vo.setComments(getComment());
+				vo.setRegistedate(getRegDate());
+				// 상세보기에서 아이디 값을 출력하는 화면은 없으니까 받아와야한다.
+				vo.setId(avo.getId());
 				AddressCtrl ctrl = new AddressCtrl();
-				ctrl.send(vo);
+				AddressVO raVO = ctrl.send(vo);
+				if(raVO.getResult() == 1) {
+					abook.refreshData();
+				}
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(this, "수정중 에러가 발생했습니다." + e,
 						"Error", JOptionPane.ERROR_MESSAGE);				
@@ -276,6 +298,9 @@ class ModifyDialog extends JDialog {
 			setRegDate("");
 		// 조회, 수정시는 Value Object에서 받은 값으로 셋팅합니다.
 		} else {
+			// aVO가 안쓰였넹!!! 그렇담 set메소드에서 this.avo = vo;가 없어도 되겠다!!!
+			// 왜냐면 입력, 수정, 조회에서 다 안쓰이니까! 전변이 필요없네??
+			// 다 지변인 vo가 처리해준다~!
 			setName(vo.getName());
 	  		setAddress(vo.getAddress());
 			setTel(vo.getTelephone());

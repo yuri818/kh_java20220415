@@ -323,7 +323,30 @@ public class AddressBook extends JFrame {
 
 	// 조회 메뉴나 조회 아이콘 선택시 작업을 정의합니다.
 	private void detailActionPerformed() {
-		System.out.println("상세조회 구현");		
+		System.out.println("상세조회 구현");	
+		int index[] = table.getSelectedRows();
+		// 너 선택 안했네..
+		if(index.length == 0) {
+			JOptionPane.showMessageDialog(this, "상세보기할 데이터를 선택하세요.","Error",JOptionPane.ERROR_MESSAGE);
+			return;
+		} else if(index.length > 1) {
+			JOptionPane.showMessageDialog(this, "상세보기할 데이터 한 건만 선택하세요.","Error",JOptionPane.ERROR_MESSAGE);
+			return;
+		} else {
+			AddressVO paVO = new AddressVO();
+			// 사용자가 선택한 로우의 id값 가져오기
+			Integer id = Integer.parseInt(myTableModel.getValueAt(index[0], 0).toString());
+			paVO.setId(id);
+			paVO.setCommand("select");
+			ctrl  = new AddressCtrl();
+			// 응답은 raVO가 받아오고 파라미터로는 paVO를 넘긴다.
+			AddressVO raVO = ctrl.send(paVO);
+			// 조회된 데이터로 보여줄 윈도우 설정
+			// raVO대신 null 쓰는 사람 - 나쁜사람....
+			// false를 썼기 때문에 여기서 커서가 깜빡거리지 않는다
+			mDialog.set("상세보기", false, raVO, abook);
+			mDialog.setVisible(true);
+		}
 	}
 
 	// 입력 메뉴나 입력 아이콘 선택시 작업을 정의합니다.
@@ -370,6 +393,7 @@ public class AddressBook extends JFrame {
 								             ,vos[i].getComments(),vos[i].getRegistedate(), vos[i].getId());
 					}
 				}
+				// 수정에서 커서가 들어가는 것은 true때문이고 상세조회에서는 false라서 안들어간다
 				mDialog.set("수정", true, newVo, abook);
 				mDialog.setVisible(true);
 			} catch (Exception e) {
@@ -412,8 +436,8 @@ public class AddressBook extends JFrame {
 		// 디폴트 생성자로 변경한 이유는 send메소드의 파라미터로 넘길 수 있다.
 		ctrl = new AddressCtrl();
 		// Controller에서 넘겨 받은 전체 데이터를 테이블에 셋팅합니다.
-		vos = ctrl.send();	
-		if(vos == null || vos.length == 0) {
+		vos = ctrl.send();
+		if(vos != null || vos.length > 0) {
 			for (int i = 0; i < vos.length; i++) {
 				Vector<Object> oneRow = new Vector<>();
 				oneRow.addElement(vos[i].getId());

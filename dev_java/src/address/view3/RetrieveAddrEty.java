@@ -27,6 +27,43 @@ public class RetrieveAddrEty {
 	public AddressVO retrieve(AddressVO vo) {
 		System.out.println("RetrieveAddrEty retrieve(AddressVO vo) 호출 성공");
 		AddressVO rVO = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id, name, address, telephone, gender				  ");
+	    sql.append("  	  ,relationship, birthday, comments, registedate      ");
+	    sql.append("  FROM mkaddrtb                                           ");
+	    sql.append(" WHERE id = ?											  ");
+	    // AddressBook에서 선택한 로우의 id값 담기
+	    int id = vo.getId();
+	    try {
+	    	con 	= dbMgr.getConnection();
+			pstmt 	= con.prepareStatement(sql.toString());
+			pstmt.setInt(1, id);
+			rs 		= pstmt.executeQuery();
+			if(rs.next()) {
+				// 게으른 인스턴스화
+				rVO = new AddressVO();
+//				rVO.setName(rs.getString(2)); // 이렇게 하지마라~~ 컬럼명 적어주세요. 숫자로하면 모름
+				rVO.setName(rs.getString("name"));
+				rVO.setAddress(rs.getString("address"));
+				rVO.setTelephone(rs.getString("telephone"));
+				rVO.setGender(rs.getString("gender"));
+				rVO.setRelationship(rs.getString("relationship"));
+				rVO.setBirthday(rs.getString("birthday"));
+				rVO.setComments(rs.getString("comments"));
+				rVO.setRegistedate(rs.getString("registedate"));
+				// 잌 노드를 쓰지 않는자와 쓰는자 그 차이 - 한끝차이
+				rVO.setId(rs.getInt("id"));
+				// 상세보기에서는 id가 필요 없지만 수정처리할 때는 id가 필요하니까 넣어두자
+				// UPDATE mkaddrtb set address = "서울시 강남구 역삼동" WHERE id =? 
+			}
+		} catch (SQLException se) {
+			System.out.println("[[query]]" + sql.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbMgr.freeConnection(rs, pstmt, con);
+		}
+//	    return null; - 배달사고
 		return rVO;
 	}
 	/***************************************************************************
@@ -71,7 +108,7 @@ public class RetrieveAddrEty {
 		} catch(Exception e) {
 			e.printStackTrace(); // 에러 스택에 쌓여 있는 로그 정보 출력해줌. 라인번호도 같인
 		} finally {
-			// DB연동해서 사용한 자원 반납하기
+			// DB연동해서 사용한 자원 반납하기 - 노출가능, 우변조
 			dbMgr.freeConnection(rs, pstmt, con);
 		}
 		return vos;

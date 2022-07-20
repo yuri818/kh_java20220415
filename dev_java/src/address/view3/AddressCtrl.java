@@ -14,7 +14,7 @@ public class AddressCtrl {
 	public AddressCtrl() {
 	}
 
-	public AddressVO send(AddressVO vo) throws Exception {
+	public AddressVO send(AddressVO vo) {
 		String command = vo.getCommand();
 
 		if (command.equals(_DEL)) {
@@ -28,10 +28,10 @@ public class AddressCtrl {
 			ModifyAddrEty modEty = new ModifyAddrEty();
 			returnVO = modEty.modify(vo);
 		} else if (command.equals(_SEL)) {
+			System.out.println("컨트롤 계층 - 상세보기 호출 성공");
 			RetrieveAddrEty selEty = new RetrieveAddrEty();
 			returnVO = selEty.retrieve(vo);
-		} else
-			throw new Exception("잘못된 Command명(" + command + ")입니다.");
+		}
 
 		return returnVO;
 	}
