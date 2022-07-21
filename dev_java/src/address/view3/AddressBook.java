@@ -405,6 +405,30 @@ public class AddressBook extends JFrame {
 	// 삭제 메뉴나 삭제 아이콘 선택시 작업을 정의합니다.
 	private void deleteActionPerformed() {
 		System.out.println("삭제하기");
+		int index[] = table.getSelectedRows();
+		if(index.length == 0) { // 아무것도 선택하지 않았어요
+			JOptionPane.showMessageDialog(this, "수정할 데이터를 선택하세요...", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		} else {
+			AddressVO paVO = new AddressVO();
+			for(int i=0; i < myTableModel.getRowCount();i++) {
+				if(table.isRowSelected(i)) { // i번째 자리 선택됐으면
+					// id를 담아주세요
+					Integer id = Integer.parseInt(myTableModel.getValueAt(i, 0).toString());
+					paVO.setCommand("delete");
+					paVO.setId(id);
+					ctrl = new AddressCtrl();
+					AddressVO raVO = ctrl.send(paVO);
+					int result = 0;
+					result = raVO.getResult();
+					// 삭제 처리가 되었다면
+					if(result == 1) { // 새로고침 해줭
+						refreshData();
+					}
+				}/////////end of if
+			}/////////////end of for
+		}/////////////////end of else
+		
 	}
 
 	// 종료 메뉴 선택시 작업을 정의합니다.
