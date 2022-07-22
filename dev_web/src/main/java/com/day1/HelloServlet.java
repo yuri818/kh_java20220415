@@ -20,6 +20,9 @@ public class HelloServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) 
 	throws ServletException, IOException {
 			System.out.println("doGet 호출 성공");
+//			PrintWriter out = res.getWriter();
+//			String name = "홍길동";
+//			out.print("<html><head>"+name);
 			req.setAttribute("name", "scott");
 			res.sendRedirect("./helloResponse.jsp");
 //			RequestDispatcher view = req.getRequestDispatcher("./helloResponse.jsp");
