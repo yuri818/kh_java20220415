@@ -1,5 +1,8 @@
 package address.view3;
 
+import java.util.List;
+import java.util.Map;
+
 public class AddressCtrl {
 
 	private AddressVO returnVO = new AddressVO();
@@ -46,6 +49,13 @@ public class AddressCtrl {
 			returnVOs = retEty.retrieve();			
 //		}
 		return returnVOs;
+	}
+	public List<Map<String,Object>> myBatisSend() {
+		System.out.println("AddressCtrl myBatisSend 호출 성공");
+		List<Map<String,Object>> addressList = null;
+		RetrieveAddrEty retEty = new RetrieveAddrEty();
+		addressList = retEty.myBatisretrieve();			
+		return addressList;
 	}
 	
 }

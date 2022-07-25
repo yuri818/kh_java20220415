@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/git_20220415/kh_java20220415/dev_java/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="mybatis-3.5.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -17,30 +17,34 @@ public class BoardController implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		logger.info("execute 호출 성공");
+		String upmu[] = (String[])req.getAttribute("upmu");
 		// 리턴타입을 받아서 sendRedirect나 foward를 하려고 인스턴스화 해줄거야
-		ActionForward 	af 		= new ActionForward();
-		String 			command = req.getParameter("gubun");
-		StringBuilder path = new StringBuilder();
-		// path에 /board-step1/을 붙여 주었으니까 경로에서 빼준다
-		path.append("/board-step1/");
-		logger.info("command ===> " + command);
+		ActionForward 		af 		= new ActionForward();
+//		String 				command = req.getParameter("gubun");
+		StringBuilder 		path 	= new StringBuilder();
+		// path에 /board/을 붙여 주었으니까 경로에서 빼준다
+		path.append("/board/");
+		logger.info("upmu[1]:메소드이름 ===> " + upmu[1]);
 		boolean isRedirect = false; // true-sendRedirect / false: forward:유지-select
 		
 		// 이거 메소드도 아니고 복잡하고 쓰레깅
 		// 글쓰기
-		if("insert".equals(command)) {
-			
+		if("boardInsert".equals(upmu[1])) {
+			logger.info("boardInsert 호출 성공");
 		}
 		// 글수정
-		else if("update".equals(command)) {
+		else if("boardUpdate".equals(upmu[1])) {
+			logger.info("boardUpdate 호출 성공");
 			
 		}
 		// 글삭제
-		else if("delete".equals(command)) {
+		else if("boardDelete".equals(upmu[1])) {
+			logger.info("boardDelete 호출 성공");
 			
 		}
 		// 글조회
-		else if("select".equals(command)) {
+		else if("boardSelect".equals(upmu[1])) {
+			logger.info("boardSelect 호출 성공");
 			List<Map<String,Object>> boardList = new ArrayList<>();
 			// 선언부와 생성부의 타입이 다를 때 다형성을 누릴 수 있다 - 폴리모피즘
 			// rmap으로 자손의 메소드는 호출이 불가함
