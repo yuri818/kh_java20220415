@@ -91,6 +91,7 @@ public class RetrieveAddrEty {
 	    AddressVO[] vos = null;
 	    try {
 			con 	= dbMgr.getConnection();
+			// 커넥션이 생성되고 나면 오라클 서버에 DML문을 가져가 요청해주는 preparedStatement가 생성돼야 함
 			pstmt 	= con.prepareStatement(sql.toString());
 			// mybatis쓰면 이만큼이 싹 사라진다
 			rs 		= pstmt.executeQuery();
@@ -126,7 +127,10 @@ public class RetrieveAddrEty {
 	// iBatis가 myBatis의 형....
 	// MyBatis때문에 추가한 부분 //
 	public List<Map<String,Object>> myBatisretrieve() {
+		// MapperConfig.xml에서 오라클 서버 정보 읽어서 커넥션 연결해줌
+		// JDBC API를 활용할 때와는 다르게 DBConnectionMgr은 사용하지 않음
 		SqlSessionFactory sqlMapper = null;
+		// SqlSessionFactory클래스와 의존관계에 있어 반드시 먼저 생성된 후에야 SqlSession객체 생성가능함 - 의존성
 		SqlSession sqlSes = null;
 		// 호출 유무
 		System.out.println("RetrieveAddrEty retrieve() 호출 성공");

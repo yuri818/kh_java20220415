@@ -1,9 +1,15 @@
 package address.view3;
 
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class ModifyAddrEty {
 	// DB연동하는 부분
@@ -43,6 +49,30 @@ public class ModifyAddrEty {
 			e.printStackTrace();
 		} finally {
 			dbMgr.freeConnection(pstmt, con);
+		}
+		return rVO;
+	}////////////////////////end of modify
+	
+	// mybatis로 고쳐보기
+	public AddressVO myBatisModify(AddressVO vo) {
+		System.out.println("ModifyAddrEty modify 호출 성공");
+		// 수정 하는것 구현해보기
+		SqlSessionFactory sqlMapper = null;
+		String resource = "address/view3/MapperConfig.xml";
+		SqlSession sqlSes = null;
+		Reader reader = null;
+		int id = vo.getId();
+		AddressVO rVO = new AddressVO();
+		int result = 0;
+		try {
+			reader = Resources.getResourceAsReader(resource);
+	    	sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+	    	sqlSes = sqlMapper.openSession();
+	    	result = sqlSes.update("updateAddress", vo);
+	    	sqlSes.commit();
+			rVO.setResult(result);
+		}  catch (Exception e) {
+			e.printStackTrace();
 		}
 		return rVO;
 	}////////////////////////end of modify

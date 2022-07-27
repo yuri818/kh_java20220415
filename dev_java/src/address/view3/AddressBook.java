@@ -1,13 +1,35 @@
 package address.view3;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+//import java.awt.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.util.Map;
 import java.util.Vector;
+import java.util.List;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class AddressBook extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -351,7 +373,7 @@ public class AddressBook extends JFrame {
 
 	// 입력 메뉴나 입력 아이콘 선택시 작업을 정의합니다.
 	private void addActionPerformed(ActionEvent evt) {
-		System.out.println("입력하기");	
+		System.out.println("입력하기");
 		// AddressBook에서 입력버튼이 눌리면 abook에서 이벤트감지하고
 		// ModifyDialog에 set메소드 호출한다
 		// 호출 할 때 파라미터로는 사용자가 선택한
@@ -460,14 +482,19 @@ public class AddressBook extends JFrame {
 		// 디폴트 생성자로 변경한 이유는 send메소드의 파라미터로 넘길 수 있다.
 		ctrl = new AddressCtrl();
 		// Controller에서 넘겨 받은 전체 데이터를 테이블에 셋팅합니다.
-		vos = ctrl.send();
-		if(vos != null || vos.length > 0) {
-			for (int i = 0; i < vos.length; i++) {
+//		vos = ctrl.send(); 
+		List<Map<String,Object>> bookList = ctrl.myBatisSend(); 
+		System.out.println(vos);
+//		if(vos !=null && vos.length > 0) {
+		if(bookList != null && bookList.size() > 0) {
+			for (int i = 0; i < bookList.size(); i++) {
+				Map<String,Object> rmap = bookList.get(i);
 				Vector<Object> oneRow = new Vector<>();
-				oneRow.addElement(vos[i].getId());
-				oneRow.addElement(vos[i].getName());
-				oneRow.addElement(vos[i].getAddress());
-				oneRow.addElement(vos[i].getTelephone());			
+				// 대문자로 써야하는 이유는 xml에서 resultType을 HashMap으로 했기 때문에 자동으로 대문자 저장
+				oneRow.addElement(rmap.get("ID"));
+				oneRow.addElement(rmap.get("NAME"));
+				oneRow.addElement(rmap.get("ADDRESS"));
+				oneRow.addElement(rmap.get("TELEPHONE"));
 				myTableModel.addRow(oneRow);
 			}
 		}/////////////////////end of if

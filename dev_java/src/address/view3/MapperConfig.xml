@@ -17,5 +17,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="address/view3/mkaddrtb.xml" />
+		<!-- <mapper resource="address/view3/board.xml" />-->
 	</mappers>
 </configuration>

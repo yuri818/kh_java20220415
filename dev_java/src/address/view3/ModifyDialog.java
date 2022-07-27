@@ -247,6 +247,7 @@ class ModifyDialog extends JDialog {
 				// 상세보기에서 아이디 값을 출력하는 화면은 없으니까 받아와야한다.
 				vo.setId(avo.getId());
 				AddressCtrl ctrl = new AddressCtrl();
+				// vo안에 
 				AddressVO raVO = ctrl.send(vo);
 				if(raVO.getResult() == 1) {
 					abook.refreshData();
@@ -269,6 +270,7 @@ class ModifyDialog extends JDialog {
 				vo.setGender(getGender());
 				vo.setRelationship(getRelationShip());
 				vo.setBirthday(getBirthDay());
+				vo.setComments(getComment());
 				
 				// 입력이든 수정이든 반드시 AddressCtrl를 경유한다 - 컨벤션(MVC 패턴)
 				AddressCtrl ctrl = new AddressCtrl();

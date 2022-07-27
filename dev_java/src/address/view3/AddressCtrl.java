@@ -22,14 +22,17 @@ public class AddressCtrl {
 
 		if (command.equals(_DEL)) {
 			DeleteAddrEty delEty = new DeleteAddrEty();
-			returnVO = delEty.delete(vo);
+//			returnVO = delEty.delete(vo);
+			returnVO = delEty.myBatisDelete(vo);
 		} else if (command.equals(_INS)) {
 			RegisterAddrEty insEty = new RegisterAddrEty();
-			returnVO = insEty.register(vo);
-			//insEty.insertAddress(vo);
+//			returnVO = insEty.register(vo);
+//			insEty.insertAddress(vo);
+			returnVO = insEty.myBatisRegister(vo);
 		} else if (command.equals(_MOD)) {
 			ModifyAddrEty modEty = new ModifyAddrEty();
-			returnVO = modEty.modify(vo);
+//			returnVO = modEty.modify(vo);
+			returnVO = modEty.myBatisModify(vo);
 		} else if (command.equals(_SEL)) {
 			System.out.println("컨트롤 계층 - 상세보기 호출 성공");
 			RetrieveAddrEty selEty = new RetrieveAddrEty();
@@ -54,7 +57,7 @@ public class AddressCtrl {
 		System.out.println("AddressCtrl myBatisSend 호출 성공");
 		List<Map<String,Object>> addressList = null;
 		RetrieveAddrEty retEty = new RetrieveAddrEty();
-		addressList = retEty.myBatisretrieve();			
+		addressList = retEty.myBatisretrieve();	
 		return addressList;
 	}
 	
