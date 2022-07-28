@@ -36,7 +36,8 @@ public class AddressCtrl {
 		} else if (command.equals(_SEL)) {
 			System.out.println("컨트롤 계층 - 상세보기 호출 성공");
 			RetrieveAddrEty selEty = new RetrieveAddrEty();
-			returnVO = selEty.retrieve(vo);
+//			returnVO = selEty.retrieve(vo);
+			returnVO = selEty.myBatisRetrieve(vo);
 		}
 
 		return returnVO;

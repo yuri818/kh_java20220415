@@ -392,8 +392,11 @@ public class AddressBook extends JFrame {
 
 	// 수정 메뉴나 수정 아이콘 선택시 작업을 정의합니다.
 	public void updateActionPerformed() {
+		// 수정은 하나의 로우만 가져오면 되기 때무넹 전체조회에서처럼 list에 담지않아도 되고 vo면 충분하다
 		System.out.println("수정하기");
 		int index[] = table.getSelectedRows();
+		// 수정의 경우 상세보기 선 처리
+		// 선처리를 위한 값을 전달하는 vo
 		AddressVO vo = new AddressVO();
 		if(index.length == 0) {
 			JOptionPane.showMessageDialog(this, "수정할 데이터를 선택하세요...", "Error", JOptionPane.ERROR_MESSAGE);
@@ -406,15 +409,12 @@ public class AddressBook extends JFrame {
 				// 테이블에서 선택된 컬럼의 id를 읽어옵니다.
 //				Integer id= (Integer)myTableModel.getValueAt(index[0], 0);
 				Integer id = Integer.parseInt
-				(myTableModel.getValueAt(index[0], 0).toString());				
+				(myTableModel.getValueAt(index[0], 0).toString());			
+				// ModifyDialog쪽에 조회 결과를 넘김
 				AddressVO newVo = null;
-				for(int i=0;i<vos.length;i++) {
-					if(id == vos[i].getId()) {
-						newVo = new AddressVO(vos[i].getName(),vos[i].getAddress(),vos[i].getTelephone()
-								             ,vos[i].getGender(),vos[i].getRelationship(),vos[i].getBirthday()
-								             ,vos[i].getComments(),vos[i].getRegistedate(), vos[i].getId());
-					}
-				}
+				vo.setId(id);
+				vo.setCommand("select");
+				newVo = ctrl.send(vo);
 				// 수정에서 커서가 들어가는 것은 true때문이고 상세조회에서는 false라서 안들어간다
 				mDialog.set("수정", true, newVo, abook);
 				mDialog.setVisible(true);

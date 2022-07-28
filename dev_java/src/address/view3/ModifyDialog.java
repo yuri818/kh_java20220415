@@ -196,7 +196,7 @@ class ModifyDialog extends JDialog {
 		// 인줄 알았는데 메소드 다 보니까 필요없네?? - 주석처리 ㄱ
 		// 인줄 알았는데 확인버튼 누를때 비교를 avo랑 하고 있었네ㅔ.. 지우지말장! - 주석 풀어..
 		// 수정 액션 처리할 때(확인버튼 눌렀을 떄 -1)입력(insert), 2)수정(update)
-		this.avo = vo;
+		this.avo = vo; // 이 인스턴스화는 어디서 되고 있나요??
 		this.abook = abook;
 		this.set(title, editable);
 		this.setValue(vo);
@@ -229,12 +229,16 @@ class ModifyDialog extends JDialog {
 		//처리하기
 		//아이디가 존재하면 수정 모드, 그렇지 않으면 입력 모드로 처리한다.
 		// -----------`-`-`----------`-여기서 avo 쓰이네....?-----------------
+		// avo가 null이 아니면 조회된 경우를 가지고 있다고 판단 
+		// avo가 언제 인스턴스화 되는지가 중요하다
+		// 이 클래스 안에서는 인스턴스화 되지 않고 외부에서 set을 통해서 값이 넘어오게 된다.
 		if(avo !=null){
 			JOptionPane.showMessageDialog(this, "수정하기에서 확인 입니다.","INFO", JOptionPane.INFORMATION_MESSAGE);		
 			try{
 				AddressVO vo = new AddressVO();	
 				// vo를 send메소드의 파라미터로 넘기는 이유가 뭘까?
 				// 버튼은 AddressBook에 있는데... 처리는 ModifyDialog에서 해야 함
+				// 이 업데이트를 AddressCtrl의 send 메소드에서 처리한다
 				vo.setCommand("update");
 				vo.setName(getName());
 				vo.setAddress(getAddress());
@@ -247,10 +251,9 @@ class ModifyDialog extends JDialog {
 				// 상세보기에서 아이디 값을 출력하는 화면은 없으니까 받아와야한다.
 				vo.setId(avo.getId());
 				AddressCtrl ctrl = new AddressCtrl();
-				// vo안에 
 				AddressVO raVO = ctrl.send(vo);
 				if(raVO.getResult() == 1) {
-					abook.refreshData();
+					abook.refreshData(); // 새로고침
 				}
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(this, "수정중 에러가 발생했습니다." + e,

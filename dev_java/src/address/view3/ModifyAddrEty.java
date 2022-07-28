@@ -55,7 +55,7 @@ public class ModifyAddrEty {
 	
 	// mybatis로 고쳐보기
 	public AddressVO myBatisModify(AddressVO vo) {
-		System.out.println("ModifyAddrEty modify 호출 성공");
+		System.out.println("ModifyAddrEty myBatisModify 호출 성공");
 		// 수정 하는것 구현해보기
 		SqlSessionFactory sqlMapper = null;
 		String resource = "address/view3/MapperConfig.xml";
@@ -70,6 +70,7 @@ public class ModifyAddrEty {
 	    	sqlSes = sqlMapper.openSession();
 	    	result = sqlSes.update("updateAddress", vo);
 	    	sqlSes.commit();
+	    	reader.close();
 			rVO.setResult(result);
 		}  catch (Exception e) {
 			e.printStackTrace();

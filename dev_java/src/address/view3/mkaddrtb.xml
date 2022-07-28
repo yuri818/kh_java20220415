@@ -5,6 +5,12 @@
       SELECT id, name, address, telephone
         FROM mkaddrtb ORDER BY name
    </select>
+   <select id="retrieve" resultType="address.view3.AddressVO">
+      SELECT id, name, address, telephone, gender, relationship, birthday
+      		, comments, registedate
+        FROM mkaddrtb
+       WHERE id = #{id}
+   </select>
    <insert id="insertAddress" parameterType="address.view3.AddressVO">
       INSERT INTO mkaddrtb(name, address, telephone, gender
                          , relationship, birthday, comments, registedate, id)

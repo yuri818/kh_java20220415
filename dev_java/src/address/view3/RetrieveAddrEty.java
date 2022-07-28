@@ -74,6 +74,30 @@ public class RetrieveAddrEty {
 //	    return null; - 배달사고
 		return rVO;
 	}
+	
+	// myBatis로 바꾸기
+	public AddressVO myBatisRetrieve(AddressVO vo) {
+		System.out.println("RetrieveAddrEty myBatisRetrieve(AddressVO vo) 호출 성공");
+		// 기본적으로 필요한 4가지 자세한 설명은 이 클래스의 밑에 나온다
+		SqlSessionFactory sqlMapper = null;
+		SqlSession sqlSes = null;
+		String resource = "address/view3/MapperConfig.xml";
+		Reader reader = null;
+		AddressVO rVO = null;
+		// AddressBook에서 선택한 로우의 id값 담기
+		int id = vo.getId();
+		try {
+			reader = Resources.getResourceAsReader(resource);
+	    	sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+	    	sqlSes = sqlMapper.openSession();
+	    	rVO = sqlSes.selectOne("retrieve", vo);
+	    	System.out.println("조회 결과 ====> "+rVO);
+	    	reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return rVO;
+	}
 	/***************************************************************************
 	 * 회원 목록 보기 구현 - n건 조회
 	 * SELECT id, name, address, DECODE(gender,'1','남','여') as "성별"
