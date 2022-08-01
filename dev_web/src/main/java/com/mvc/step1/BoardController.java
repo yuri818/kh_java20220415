@@ -27,7 +27,11 @@ public class BoardController implements Action {
 		logger.info("upmu[1]:메소드이름 ===> " + upmu[1]);
 		boolean isRedirect = false; // true-sendRedirect / false: forward:유지-select
 		
-		// 이거 메소드도 아니고 복잡하고 쓰레깅
+		// 이거 메소드도 아니고 복잡하고 쓰레깅/
+		// 1-1에서는 메소드 내에서 분기문으로 처리를 함
+		// 이는 가독성도 떨어지고...
+		// 재사용성도 별로...
+		
 		// 글쓰기
 		if("boardInsert".equals(upmu[1])) {
 			logger.info("boardInsert 호출 성공");
