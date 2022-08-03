@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 // 시중 교재에는 어노테이션으로 url매핑을 처리하지만
 // 수업에서는 스프링 프레임워크를 최대한 흉내
+// 1-4에서는 가급적 if문을 버리고 메소드로 독립시켜본다
 public class ActionServlet extends HttpServlet {
 	Logger logger = Logger.getLogger(ActionServlet.class);
 	public void doService(HttpServletRequest req, HttpServletResponse res) 

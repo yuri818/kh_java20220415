@@ -30,9 +30,10 @@
 		$("#dlg_boardIns").dialog('close');
 	}
 	function getBoardList(){
-		//alert("getBoardList호출");     	   	
-		isOk = true;
-		location.href="boardListTest.jsp?isOk=true";
+		//alert("getBoardList호출");   
+		$("dg_board").datagrid({
+			url:"jsonBoardList.kh"
+		});
 	}	
 	function boardDetail(bm_no){
 	}
@@ -117,12 +118,12 @@
             data-options="rownumbers:true,singleSelect:true,toolbar:'#tb',footer:'#pn_board'">
         <thead>
             <tr>
-                <th data-options="field:'BM_NO',width:60, align:'center', hidden:'true'">글번호</th>
-                <th data-options="field:'BM_TITLE',width:350">제목</th>
-                <th data-options="field:'BM_WRITER',width:80,align:'center'">작성자</th>
-                <th data-options="field:'BM_DATE',width:100,align:'center'">작성일</th>
+                <th data-options="field:'B_NO',width:60, align:'center', hidden:'true'">글번호</th>
+                <th data-options="field:'B_TITLE',width:350">제목</th>
+                <th data-options="field:'B_WRITER',width:80,align:'center'">작성자</th>
+                <th data-options="field:'B_DATE',width:100,align:'center'">작성일</th>
                 <th data-options="field:'BS_FILE',width:170">첨부파일</th>
-                <th data-options="field:'BM_HIT',width:60,align:'center'">조회수</th>
+                <th data-options="field:'B_HIT',width:60,align:'center'">조회수</th>
             </tr>
         </thead>
         <tbody>
@@ -142,21 +143,21 @@
 			Map<String,Object> rMap = boardList.get(i);
 %>	      
         	<tr>
-        		<td><%=rMap.get("BM_NO")%></td>
+        		<td><%=rMap.get("B_NO")%></td>
         		<td>
 <!-- 너 댓글이니? -->        		
-<a href="javascript:boardDetail('<%=rMap.get("BM_NO")%>')" style="text-decoration:none;color:#000000">        		
-        		<%=rMap.get("BM_TITLE")%>
+<a href="javascript:boardDetail('<%=rMap.get("B_NO")%>')" style="text-decoration:none;color:#000000">        		
+        		<%=rMap.get("B_TITLE")%>
 </a>        		
         		</td>
-        		<td><%=rMap.get("BM_WRITER")%></td>
-        		<td><%=rMap.get("BM_DATE")%></td>
+        		<td><%=rMap.get("B_WRITER")%></td>
+        		<td><%=rMap.get("B_DATE")%></td>
         		<td>
         		<a href="javascript:fileDown('<%=rMap.get("BS_FILE") %>')">
         		<%=rMap.get("BS_FILE")%>
         		</a>
         		</td>
-        		<td><%=rMap.get("BM_HIT")%></td>
+        		<td><%=rMap.get("B_HIT")%></td>
         	</tr>
 <%
 		}// end of for

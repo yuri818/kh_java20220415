@@ -54,13 +54,15 @@ public class FrontMVC extends HttpServlet {
 			af = boardController.execute(req, res);
 		}
 		
+		// 이 부분에 대해 2사람 이상에게 설명해보자
 		if(af != null) {
 			if(af.isRedirect()) {
 				// 상수 싫어요
 //				res.sendRedirect("xxx.jsp");
 				// 변수 좋아요
-				res.sendRedirect(af.getPath());
+				res.sendRedirect(af.getPath()); // 유지가 안됨
 			} else { // forward - 유지, 주소안변함, 그런데 페이지는 바뀌었다
+				// select문이면 무조건 너!
 				RequestDispatcher view = req.getRequestDispatcher(af.getPath());
 				view.forward(req, res);
 			}
