@@ -6,6 +6,7 @@
 	if(request.getParameter("isOk")!=null){
 		isOk = Boolean.parseBoolean(request.getParameter("isOk"));
 	}
+	// 유지 -> DB 경유 -> 서블릿
 	List<Map<String,Object>> boardList = 
 			(List<Map<String,Object>>)request.getAttribute("boardList");
 	int size = 0;

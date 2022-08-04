@@ -47,6 +47,10 @@ public class Board2Controller implements Controller {
 			page = "forward:board2/jsonBoardList";
 		} else if("boardInsert".equals(upmu[1])) {
 			page = "";
+		} else if("boardUpate".equals(upmu[1])) {
+			page = "";
+		} else if("boardDelete".equals(upmu[1])) {
+			page = "";
 		}
 		return page;
 	}
