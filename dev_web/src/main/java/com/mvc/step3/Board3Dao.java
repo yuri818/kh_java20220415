@@ -1,4 +1,4 @@
-package com.mvc.step2;
+package com.mvc.step3;
 
 import java.util.List;
 import java.util.Map;
@@ -9,12 +9,12 @@ import org.apache.log4j.Logger;
 
 import com.util.MyBatisCommonFactory;
 
-public class Board2Dao {
-	Logger logger = Logger.getLogger(Board2Dao.class);
+public class Board3Dao {
+	Logger logger = Logger.getLogger(Board3Dao.class);
 	SqlSessionFactory sqlSessionFactory = null;
 	SqlSession sqlSession = null;
 	
-	public Board2Dao() {
+	public Board3Dao() {
 		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
 	}
 	public List<Map<String,Object>> boardList(){
@@ -23,7 +23,6 @@ public class Board2Dao {
 		try {
 			sqlSession = sqlSessionFactory.openSession();
 			boardList = sqlSession.selectList("boardList");
-			// insert here - 데이터 확인해보기
 			logger.info(boardList);
 		} catch (Exception e) {
 			logger.info("Exception : " + e.toString());

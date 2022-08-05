@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.mvc.step2.Board2Controller;
-import com.mvc.step2.ModelAndView;
 /*
  * <1-3의 다른점!!!!!!!!!>
  * 리턴타입을 String + ModelAndView 추가적으로 지원해 본다
@@ -46,6 +44,8 @@ public class ActionSupport extends HttpServlet {
 		// 
 		if(obj != null) {
 			String pageMove[] = null;
+			ModelAndView mav = null;
+			
 			if(obj instanceof String) {
 				if(((String)obj).contains(":")) {
 					logger.info(":콜론이 포함되어 있어요");
@@ -58,9 +58,17 @@ public class ActionSupport extends HttpServlet {
 				}
 				logger.info("pageMove[0]==> "+pageMove[0]+", pageMove[1]==>"+pageMove[1]);
 			}/////////////end of String
+			// Model과 View의 혼합이 ModelAndView이다(화면과 데이터가 함께이다)
+			// Model : 내 안에 List
 			else if(obj instanceof ModelAndView) {
+				mav = (ModelAndView)obj;
+				pageMove = new String[2];
+				pageMove[0] = "forward";
+				pageMove[1] = mav.getViewName();
+				logger.info("pageMove[0]==> "+pageMove[0]+", pageMove[1]==>"+pageMove[1]);
 				
 			}
+			// 이 부분이 재사용성이 떨어져서 개선할 것..
 			if(pageMove != null) {
 				String path = pageMove[1];
 				if("redirect".equals(pageMove[0])) { // 너 select가 아니야?

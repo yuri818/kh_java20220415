@@ -4,21 +4,24 @@ import org.apache.log4j.Logger;
 
 public class PageBar {
 	Logger logger = Logger.getLogger(PageBar.class);
-	//전체레코드 갯수
+	//전체레코드 갯수 - SELECT count(*) FROM board_master_t
+	// List<Map<String, Object>>.size() -> 전체 레코드 수
 	private int totalRecord;//list.size():47row
 	//페이지당 레코드 수
+	// boardList.pj or memberList.pj or orderList.pj인가에 따라 달라질 수 있다
 	private int numPerPage;// 10개씩이다
 	//블럭당 디폴트 페이지 수 - 여기서는 일단 2개로 정함.
+	// 페이지 수에 대한 블록
 	private int pagePerBlock=2;
 	//총페이지 수
-	private int totalPage;
+	private int totalPage; // (int)ceil(47/10.0)
 	//총블럭 수
 	private int totalBlock;
 	//현재 내가 바라보는 페이지 수
 	private int nowPage;
 	//현재 내가 바라보는 블럭 수
 	private int nowBlock;
-	//적용할 페이지 이름
+	//적용할 페이지 이름 - 따로 변수처리 하는 이유?
 	private String pagePath;
 	
 	private String pagination;
@@ -39,6 +42,11 @@ public class PageBar {
 	 * 내보내지는 정보는 어디에 담으면 될까?
 	 * 
 	 */
+	
+	// 첫번째 파라미터: pagePath를 기준으로 한페이지에 몇개씩 출력될 것인지가 바뀜
+	// 네번째 파라미터: 업무 page에 따라 달라짐
+	// 두번쨰 파라미터: 전체 레코드의 수
+	// 세번째 파라미터: 현재 내가 있는 페이지의 수
 	public PageBar(int numPerPage, int totalRecord, int nowPage, String pagePath) {
 		this.numPerPage = numPerPage;
 		this.totalRecord = totalRecord;
@@ -55,11 +63,12 @@ public class PageBar {
 	//setter메소드 선언
 	public void setPageBar() {
 		StringBuilder pageLink = new StringBuilder();
-		//전체 레코드 수가 0보다 클때 처리하기
+		//전체 레코드 수가 0보다 클때 처리하기 - 조회 결과가 있다
 		if(totalRecord>0) {
 			//nowBlock이 0보다 클때 처리
 			//이전 페이지로 이동 해야 하므로 페이지 번호에 a태그를 붙여야 하고
 			//pagePath뒤에 이동할 페이지 번호를 붙여서 호출 해야함.
+			// 블록이 0보다 더 큰가?
 			if(nowBlock > 0 ) {                                    //(1-1)*2+(2-1)=1
 				pageLink.append("<a href='"+pagePath+"?nowPage="+((nowBlock-1)*pagePerBlock+(pagePerBlock-1))+"'>");
 				pageLink.append("<img border=0 src='/images/bu_a.gif'>");
@@ -68,6 +77,7 @@ public class PageBar {
 			for(int i=0;i<pagePerBlock;i++) {
 				//현재 내가 보고 있는 페이지 블록 일때와
 				if(nowBlock*pagePerBlock+i==nowPage) {
+					// 내가 바라보고 있을 때는 <a>없이 <b>로만 글씨크기만 키워줌
 					pageLink.append("<b>"+(nowBlock*pagePerBlock+i+1)+"</b>&nbsp;");
 				}
 				//그렇지 않을 때를 나누어 처리해야 함.
@@ -76,7 +86,8 @@ public class PageBar {
 					
 				}
 				//모든 경우에 pagePerBlock만큼 반복되지 않으므로 break처리해야 함.
-				//주의할 것.
+				//주의할 것. - NullpointerException 발생이 우려됨
+				// 무한루프 방지 코드
 				if((nowBlock*pagePerBlock)+i+1==totalPage) break;
 			}
 			//현재 블록에서 다음 블록이 존재할 경우 이미지 추가하고 페이지 이동할 수 있도록
@@ -88,7 +99,7 @@ public class PageBar {
 			}
 		}
 		logger.info("pageLink.toString():"+pageLink.toString());
-		pagination = pageLink.toString();
+		pagination = pageLink.toString(); // 문자열로 바꿔주는 코드
 	}
 	//getter메소드 선언
 	public String getPageBar() {

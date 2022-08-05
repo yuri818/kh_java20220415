@@ -35,6 +35,7 @@ public class HandlerMapping {
 			controller = new Board3Controller();
 			if("boardList".equals(upmu[1])) {
 				// 이걸 메소드 이름으로 쓸거임
+				// 파라미터로 원본을 넘긴다.
 				obj = controller.boardList(req, res);
 				if(obj instanceof ModelAndView) { // obj가 ModelAndView타입이면 리턴타입 맞추기
 					return (ModelAndView)obj;
