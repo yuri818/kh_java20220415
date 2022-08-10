@@ -13,4 +13,7 @@ public interface Controller3 {
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> rMap);
 	public String execute(HttpServletRequest req, HttpServletResponse res);
 	public Object boardList(HttpServletRequest req, HttpServletResponse res);
+	public Object boardDetail(HttpServletRequest req, HttpServletResponse res);
+	public Object boardInsert(HttpServletRequest req, HttpServletResponse res);
+
 }

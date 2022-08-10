@@ -33,10 +33,25 @@ public class HandlerMapping {
 		
 		if("board3".equals(upmu[0])) {
 			controller = new Board3Controller();
-			if("boardList".equals(upmu[1])) {
+			if("boardInsert".equals(upmu[1])) {
 				// 이걸 메소드 이름으로 쓸거임
 				// 파라미터로 원본을 넘긴다.
+				obj = controller.boardInsert(req, res);
+				if(obj instanceof String) { // obj가 String타입이면 리턴타입 맞추기
+					return (String)obj;
+				}
+			}
+			// 게시판 글쓰기 메소드 호출
+			else if("boardList".equals(upmu[1])) {
 				obj = controller.boardList(req, res);
+				if(obj instanceof ModelAndView) { // obj가 ModelAndView타입이면 리턴타입 맞추기
+					return (ModelAndView)obj;
+				} else if(obj instanceof String) { // obj가 String타입이면 리턴타입 맞추기
+					return (String)obj;
+				}
+			}
+			else if("boardDetail".equals(upmu[1])) {
+				obj = controller.boardDetail(req, res);
 				if(obj instanceof ModelAndView) { // obj가 ModelAndView타입이면 리턴타입 맞추기
 					return (ModelAndView)obj;
 				} else if(obj instanceof String) { // obj가 String타입이면 리턴타입 맞추기
