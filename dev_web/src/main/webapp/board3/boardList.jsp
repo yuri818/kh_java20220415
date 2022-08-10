@@ -17,7 +17,7 @@
 		size = boardList.size();
 	}
 	// 한 페이지에 출력될 로우의 수를 담는다
-	int numPerPage = 3;
+	int numPerPage = 10;
 	// 현재 내가 바라보는 페이지 번호 담는 변수
 	int nowPage = 0;
 	if(request.getParameter("nowPage") != null){
@@ -91,11 +91,14 @@
 	
 		//등록 날짜 정보를 선택했을 때
 		$('#db_date').datebox({
+			
 		});
 		
 		//검색 조건 콤보에 변경이 일어났을 때
 		$('#cb_search').combobox({
+			
 		});
+		
 		$('#tb_search').textbox({
 			icons: [{
 				iconCls:'icon-search',
@@ -103,10 +106,12 @@
 					alert("검색");
 					//$(e.data.target).textbox('setValue', 'Something added!');
 					$("#dg_board").datagrid({
+						
 					});
 				}
 			}]
 		});
+		
 	    $('#linkBtnSearch').bind('click', function(){
 	        //alert('easyui');
 	        getBoardList();
@@ -126,7 +131,8 @@
 		$('#crudBtnDel').bind('click', function(){
 	        alert('삭제 버튼');
 	    });			
-	    /*===================== CRUD버튼 끝 ====================*/	    
+	    /*===================== CRUD버튼 끝 ====================*/	  
+	    
 	});///////////////// end of ready
 </script>
 <center>
@@ -162,7 +168,22 @@
         	<tr>
         		<td><%=rMap.get("B_NO")%></td>
         		<td>
-<!-- 너 댓글이니? -->        		
+<!-- 너 댓글이니? -->        
+<%
+	//스크립틀릿 안에 작성한 코드는 라이프 사이클에서 service()에 들어간다
+	// 그러니까 메소드 선언 안됨
+	// path는 common/easyui_common.jsp에서 임포트 해옴
+	String imgPath = path+"..\\images\\";
+	if(Integer.parseInt(rMap.get("B_POS").toString()) > 0) {
+		for(int j=0; j<Integer.parseInt(rMap.get("B_POS").toString());j++) {
+			out.print("&nbsp;&nbsp;");
+		}////end of for
+%>
+	<img src="<%=imgPath %>reply.gif"/>
+<%
+	
+	} // 댓글이니까 댓글아이콘 추가해줘! /////end of if
+%>
 <a href="javascript:boardDetail('<%=rMap.get("B_NO")%>')" style="text-decoration:none;color:#000000">        		
         		<%=rMap.get("B_TITLE")%>
 </a>        		

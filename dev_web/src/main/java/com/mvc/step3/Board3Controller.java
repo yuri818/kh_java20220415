@@ -21,6 +21,22 @@ public class Board3Controller implements Controller3 {
 	Logger logger = Logger.getLogger(Board3Controller.class);
 	Board3Logic boardLogic = new Board3Logic();
 	@Override
+	public Object boardUpdate(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("boardUpdate 호출 성공");
+		// 사용자가 입력한 값을 담기 - Map에 담기 - req.getParameter("name")을 대신해준다
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		int result = 0;
+		result = boardLogic.boardUpdate(pMap); 
+		// jsp -> action(update) -> action(select) ---유지(forward)---> boardList.jsp
+		// 밑에 방법은 redirect이므로 유지가 되지 않는다
+		String path = "redirect:boardList.pj"; // 페이지를 리턴해야함
+		// forward로 전송해야 할 때 쓰는 방법!!
+		
+		return path;
+	}
+	@Override
 	public ModelAndView boardList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("boardList 호출 성공");
 		// ModelAndView 객체를 설계함에 따라서 req가 없어도 조회결과를 담을 수 있게 되었다 - 의미
@@ -74,6 +90,7 @@ public class Board3Controller implements Controller3 {
 		mav.setViewName("board3/read");
 		return mav;
 	}
+	
 
 
 }

@@ -6,6 +6,13 @@
 		VALUES(#{b_no}, #{b_title}, #{b_writer}, #{b_content}, #{b_pw}
 			 , #{b_group}, #{b_pos}, #{b_step}, to_char(sysdate, 'YYYY-MM-DD'))
 	</insert>
+	<update id="boardMUpdate" parameterType="map">
+		UPDATE board_master_t
+	 	   SET b_title = #{b_title}
+	 	      ,b_writer = #{b_writer}
+	 	      ,b_content = #{b_content}
+ 		 WHERE b_no = #{b_no}
+	</update>
 	<update id="bStepUpdate" parameterType="map">
 		UPDATE board_master_t
 	 	   SET b_step = b_step + 1
@@ -28,6 +35,7 @@
 	<select id="boardList" parameterType="java.util.Map" resultType="map">
 		SELECT bm.b_no, bm.b_title, bm.b_writer, bs.bs_file, bm.b_hit
 			  ,bm.b_content, bm.b_date, bm.b_group, bm.b_pos, bm.b_step
+			  ,bm.b_pw
 		  FROM board_master_t bm LEFT OUTER JOIN board_sub_t bs
 			ON bm.b_no = bs.b_no
 	  <where>

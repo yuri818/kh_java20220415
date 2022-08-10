@@ -33,7 +33,15 @@ public class HandlerMapping {
 		
 		if("board3".equals(upmu[0])) {
 			controller = new Board3Controller();
-			if("boardInsert".equals(upmu[1])) {
+			if("boardUpdate".equals(upmu[1])) {
+				// 이걸 메소드 이름으로 쓸거임
+				// 파라미터로 원본을 넘긴다.
+				obj = controller.boardUpdate(req, res);
+				if(obj instanceof String) { // obj가 String타입이면 리턴타입 맞추기
+					return (String)obj;
+				}
+			}
+			else if("boardInsert".equals(upmu[1])) {
 				// 이걸 메소드 이름으로 쓸거임
 				// 파라미터로 원본을 넘긴다.
 				obj = controller.boardInsert(req, res);
