@@ -85,10 +85,21 @@ public class Board3Controller implements Controller3 {
 		// ModelAndView 객체를 설계함에 따라서 req가 없어도 조회결과를 담을 수 있게 되었다 - 의미
 		ModelAndView mav = new ModelAndView(req);
 		List<Map<String,Object>> boardList = null;
-		boardList = boardLogic.boardList(pMap);
+		boardList = boardLogic.boardDetail(pMap); // 한건 조회했을때 이니까 boardDetail로 바꾸깅
 		mav.addObject("boardList",boardList);
 		mav.setViewName("board3/read");
 		return mav;
+	}
+	@Override
+	public Object boardDelete(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("boardDelete 호출 성공");
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		int result = 0;
+		result = boardLogic.boardDelete(pMap); 
+		String path = "redirect:boardList.pj";
+		return path;
 	}
 	
 

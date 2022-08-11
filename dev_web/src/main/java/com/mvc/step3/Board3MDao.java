@@ -84,6 +84,21 @@ public class Board3MDao {
 		}
 		return result;
 	}
+	public int hitCount(Map<String, Object> pMap) {
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			// 여기서 "hitCount"는 board.xml에서의 아이디와 연결
+			result = sqlSession.update("hitCount",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
 	public int boardMUpdate(Map<String, Object> pMap) {
 		int result = 0;
 		try {
@@ -116,6 +131,21 @@ public class Board3MDao {
 			logger.info("Exception : " + e.toString());
 		} finally {
 			// 사용한 자원은 반드시 반납한다 - 묵시적으로 처리는 되지만 좀 더 서버의 부담을 덜기 위해 명시호출
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public int boardMDelete(Map<String, Object> pMap) {
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("boardMDelete",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
 			sqlSession.close();
 		}
 		return result;
