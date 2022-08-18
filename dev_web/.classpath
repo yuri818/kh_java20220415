@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="C:/app/user1/product/11.1.0/db_1/jdbc/lib/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="D:/git_20220415/kh_java20220415/dev_web/src/main/webapp/WEB-INF/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mybatis-3.5.10.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cos-05Nov2002.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

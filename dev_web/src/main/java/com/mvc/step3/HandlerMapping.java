@@ -31,10 +31,13 @@ public class HandlerMapping {
 		String 			path 	= null;
 		ModelAndView 	mav 	= null;
 		
-		if("board3".equals(upmu[0])) {
+		if("board3".equals(upmu[0])) { // 배열의 첫 방에 업무 폴더 이름이 들어있다
 			controller = new Board3Controller();
+			// if문 사용하여 메소드 이름을 결정 지었다
+			// 코드의 양은 늘었다. 왜? if문이 늘어가니까
+			// 그치만 복잡도는 줄었다~~!
 			if("boardDelete".equals(upmu[1])) {
-				obj = controller.boardDelete(req, res);
+				obj = controller.boardDelete(req, res); // 메소드 이름을 여기서 결정할거임 - upmu를 쓴 이유
 				if(obj instanceof String) { 
 					return (String)obj;
 				}
@@ -45,8 +48,8 @@ public class HandlerMapping {
 					return (String)obj;
 				}
 			}
+			// 이걸 메소드 이름으로 쓸거임
 			else if("boardInsert".equals(upmu[1])) {
-				// 이걸 메소드 이름으로 쓸거임
 				// 파라미터로 원본을 넘긴다.
 				obj = controller.boardInsert(req, res);
 				if(obj instanceof String) { // obj가 String타입이면 리턴타입 맞추기

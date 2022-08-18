@@ -37,7 +37,7 @@ public class BoardListServlet extends HttpServlet {
 //		boardList = new ArrayList<>(); // 새로운 주소번지 부여
 		logger.info("boardList주소번지 3: "+boardList+", "+boardList.size());
 		req.setAttribute("boardList", boardList);
-		RequestDispatcher view = req.getRequestDispatcher("/kh_exam/board/boardList.jsp");
+		RequestDispatcher view = req.getRequestDispatcher("/board/boardList.jsp");
 		view.forward(req, res);		
 	}
 	@Override

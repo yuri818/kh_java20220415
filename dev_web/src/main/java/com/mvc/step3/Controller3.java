@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 // 단독으로 인스턴스화 할 수 없다
 // 메소드 뒤에 좌중과호 우중괄호가 없다 - 세미콜론으로 끝났다 - 추상메소드
 // 명세서이다 - 반드시 구현해 주었으면 해
+// 같이 사용할 수 있다 - 통일감
 public interface Controller3 {
+	// 리턴타입이 ModelAndView 이다
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> rMap);
 	public String execute(HttpServletRequest req, HttpServletResponse res);
+	// 새로고침 - 조회 - 명세서이다
 	public Object boardList(HttpServletRequest req, HttpServletResponse res);
 	public Object boardDetail(HttpServletRequest req, HttpServletResponse res);
 	public Object boardInsert(HttpServletRequest req, HttpServletResponse res);

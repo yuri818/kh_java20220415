@@ -1,11 +1,15 @@
 package com.util;
 
+import java.io.File;
 import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 /*
  * 텍스트 파일 처리(문자열 처리) - 숫자도 문자열 처리
  * 바이너리 파일 설치(문자+숫자파일) - 첨부파일은 바이너리 코드
@@ -18,9 +22,60 @@ import org.apache.log4j.Logger;
 public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
+	// 첨부파일 처리에 필요한 변수 선언 - 바이너리 타입 처리를 위해 필요함
+	MultipartRequest multi =  null;
+	// 첨부파일 업로드의 물리적인 경로 이름
+	String realFolder = null;
+	// 첨부파일의 한글처리
+	String encType = "utf-8";
+	// 첨부파일의 최대 크기
+	int maxSize = 5*1024*1024; //5MB
+	
 	public HashMapBinder (HttpServletRequest req) {
 		this.req = req;
+		realFolder = "D:\\git_20220415\\kh_java20220415\\dev_web\\src\\main\\webapp\\pds";
 	}
+	public void multiBind(Map<String,Object> pMap) {
+		pMap.clear();
+		try {
+			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		} catch (Exception e) {
+			logger.info("multiBind Exception: "+e.toString());
+		}
+		Enumeration<String> em = multi.getParameterNames();
+		while(em.hasMoreElements()) {
+			String key = em.nextElement();
+			pMap.put(key, multi.getParameter(key));
+		}
+		// 기존에 클라이언트에서 받아온 정보를 처리하기
+		// 첨부파일에 대한 정보 받아오기
+		Enumeration<String> files = multi.getFileNames();
+		// 만일 폼 전송에서 업로드할 파일명이 존재하면 -> if문 실행
+		if(files != null) {
+			// 업로드 대상 파일을 객체로 만듦
+			File file = null;
+			while(files.hasMoreElements()) {
+				String fname = files.nextElement();
+				// Map에 담길 key값과 변수명 일치시키자
+				String filename = multi.getFilesystemName(fname);
+				pMap.put("bs_file", filename);
+				// 사이즈는 어떻게 구하지?
+				if(filename != null && filename.length()>1) {
+					file = new File(realFolder+"\\"+filename);
+				}
+				logger.info(file);
+			}/////////end of while
+			// 첨부파일에 크기를 담을 수 있는 변수 선언
+			double size = 0;
+			if(file != null) {
+				size = file.length();
+				// 파일의 크기를 조정하고 싶어!
+				size = size/1024.0; // byte -> kbyte
+				pMap.put("bs_size", size);
+			}
+		}
+	}
+	
 	public void bind(Map<String,Object> pMap) {
 		// 사용자가 입력한 값을 담을 맵이 외부 클래스에서 인스턴스화 되어 넘어오니까
 		// 초기화 처리 후 사용함

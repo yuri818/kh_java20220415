@@ -1,5 +1,9 @@
 package com.mvc.step3;
-
+// XXXController는 서블릿이 아니어도 된다
+// ActionSupport 가 서블릿이므로!
+// XXX.jsp요청하는 것과 XXX.pj로 요펑하는 것의 차이는 뭘까요?
+	// 표준 서블릿(HttpServlet)이 요청을 받는 것이고 pj로 요청이 들어오는 것은 ActionSupport(서블릿)이 요청을 받음
+// HandlerMapping
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +72,9 @@ public class Board3Controller implements Controller3 {
 		logger.info("boardInsert 호출 성공");
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
-		// HashMapBinder에서 다 담아주니까
-		hmb.bind(pMap);
+		//아래 코드는 base32, base64처리시 사용하기
+//		hmb.bind(pMap);
+		hmb.multiBind(pMap);
 		int result = 0;
 		result = boardLogic.boardInsert(pMap); 
 		String path = "redirect:boardList.pj"; // 페이지를 리턴해야함
@@ -82,6 +87,7 @@ public class Board3Controller implements Controller3 {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
+		
 		// ModelAndView 객체를 설계함에 따라서 req가 없어도 조회결과를 담을 수 있게 되었다 - 의미
 		ModelAndView mav = new ModelAndView(req);
 		List<Map<String,Object>> boardList = null;
@@ -96,6 +102,7 @@ public class Board3Controller implements Controller3 {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
+//		hmb.multiBind(pMap);
 		int result = 0;
 		result = boardLogic.boardDelete(pMap); 
 		String path = "redirect:boardList.pj";

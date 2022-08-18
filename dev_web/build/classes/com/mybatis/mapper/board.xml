@@ -15,6 +15,10 @@
 		VALUES(#{b_no}, #{b_title}, #{b_writer}, #{b_content}, #{b_pw}
 			 , #{b_group}, #{b_pos}, #{b_step}, to_char(sysdate, 'YYYY-MM-DD'))
 	</insert>
+	<insert id="boardSInsert" parameterType="map">
+		INSERT INTO board_sub_t(b_no, bs_seq, bs_file, bs_size)
+		VALUES(#{b_no}, #{bs_seq}, #{bs_file}, #{bs_size})
+	</insert>
 	<update id="boardMUpdate" parameterType="map">
 		UPDATE board_master_t
 	 	   SET b_title = #{b_title}
@@ -44,11 +48,11 @@
 	<select id="boardList" parameterType="java.util.Map" resultType="map">
 		SELECT bm.b_no, bm.b_title, bm.b_writer, bs.bs_file, bm.b_hit
 			  ,bm.b_content, bm.b_date, bm.b_group, bm.b_pos, bm.b_step
-			  ,bm.b_pw
+			  ,bm.b_pw, bs.bs_file, NVL(bs.bs_size,0) bs_size
 		  FROM board_master_t bm LEFT OUTER JOIN board_sub_t bs
 			ON bm.b_no = bs.b_no
 	  <where>
-	  	<if test="b_date!=null and b_date.length()>0">
+	  	<if test='b_date!=null and b_date.length()>0 and !b_date.equals("undefined")'>
 	  		AND bm.b_date = #{b_date}
 	  	</if>
 	  	<if test="b_no>0">

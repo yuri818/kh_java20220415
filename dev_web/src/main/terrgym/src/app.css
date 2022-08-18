@@ -7,3 +7,9 @@ button {
   border: 0;
   cursor: pointer;
 }
+
+.workout {
+  font-size: 2.5rem;
+  padding: 1.5em;
+  list-style: none;
+}
