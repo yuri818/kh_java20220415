@@ -5,18 +5,15 @@ function Workouts(props) {
   console.log(props); // 객체로 받는 경우
   console.log(props.workouts); // 배열
   
-  const handleDecrement = (e) => {
-    
-  };
-
   const handleIncrement = (workout) => {
     props.onIncrement(workout);
   };
-
-  const handleDelete = (e) => {
-
+  const handleDecrement = (workout) => {
+    props.onDecrement(workout);
   };
-
+  const handleDelete = (workout) => {
+    props.onDelete(workout);
+  };
   return (
     <div className='workouts'>
       <ul>
@@ -26,6 +23,8 @@ function Workouts(props) {
     <Workout //
       key={workout.id} // 
       onIncrement={handleIncrement}
+      onDecrement={handleDecrement}
+      onDelete={handleDelete}
       workout={workout} //
     />
   ))
