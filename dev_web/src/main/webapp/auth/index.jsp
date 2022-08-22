@@ -8,7 +8,12 @@
     <%@ include file="../common/easyui_common.jsp" %>
     <script type="text/javascript">
     	function login() {
-    		
+    		const tb_id = $("#tb_id").val();
+    		const tb_pw = $("#tb_pw").val();
+    		location.href = "./login.pj?mem_id="+tb_id+"&mem_pw="+tb_pw;
+    	}
+    	function logout() {
+    		location.href="./logout.jsp";
     	}
     </script>
 </head>
@@ -21,10 +26,10 @@
 		    iconCls:'icon-man',
 		    iconAlign:'right'
 		});
-		$('#tb_pw').textbox({
-		    iconCls:'icon-lock',
-		    iconAlign:'right'
-		});
+		$('#tb_pw').passwordbox({
+	        prompt: 'Password',
+	        showEye: true
+	    });
 	});
 </script>
     <h2>인증처리</h2>
@@ -41,7 +46,7 @@
 	if(s_name != null) {
 %>        	
 <%= s_name %>님 환영합니다.
-<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">로그아웃</a>
+<a id="btn" href="javascript:logout()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">로그아웃</a>
 <!-- 로그인을 하지 않았을 경우 -->
 <%
 	} else {
@@ -58,7 +63,7 @@
 				</tr>
 				<tr>
 					<td>
-		    	    	<input id="tb_pw" type="password" style="width:60%">
+		    	    	<input id="tb_pw" type="text" style="width:60%">
 					</td>
 				</tr>
 			</table>

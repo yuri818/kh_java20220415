@@ -60,11 +60,11 @@ public class FrontMVC extends HttpServlet {
 				// 상수 싫어요
 //				res.sendRedirect("xxx.jsp");
 				// 변수 좋아요
-				res.sendRedirect(af.getPath()); // 유지가 안됨
+				res.sendRedirect(af.getPath()); // 유지가 안됨 - 싱글톤 아님
 			} else { // forward - 유지, 주소안변함, 그런데 페이지는 바뀌었다
 				// select문이면 무조건 너!
 				RequestDispatcher view = req.getRequestDispatcher(af.getPath());
-				view.forward(req, res);
+				view.forward(req, res); // 여기서 req는 싱글톤패턴이라 원본임.
 			}
 		}
 	}/////////////end of doService

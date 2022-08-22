@@ -14,6 +14,8 @@ public interface Controller3 {
 	// 리턴타입이 ModelAndView 이다
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> rMap);
 	public String execute(HttpServletRequest req, HttpServletResponse res);
+	// 로그인 추상메소드 선언
+	public Object login(HttpServletRequest req, HttpServletResponse res);
 	// 새로고침 - 조회 - 명세서이다
 	public Object boardList(HttpServletRequest req, HttpServletResponse res);
 	public Object boardDetail(HttpServletRequest req, HttpServletResponse res);

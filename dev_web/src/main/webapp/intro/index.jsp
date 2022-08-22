@@ -20,19 +20,20 @@
 <!-- =======================[[ 컨텐츠 화면 출력 ]]======================= -->
 		<td align="center" width="1000px" height="400px">
 <%
+	// index.jsp
 	if(menu == null) {
 %>
 		<%@ include file="main.jsp" %>
 <%
-	} else if("intro".equals(menu)) {
+	} else if("intro".equals(menu)) { // index.jsp?menu=intro
 %>
 		<%@ include file="intro.jsp" %>
 <%
-	} else if("notice".equals(menu)) {
+	} else if("notice".equals(menu)) {// index.jsp?menu=notice
 %>
 		<%@ include file="notice.jsp" %>
 <%
-	} else if("qna".equals(menu)) {
+	} else if("qna".equals(menu)) {// index.jsp?menu=qna
 %>
 		<%@ include file="qna.jsp" %>
 <%
