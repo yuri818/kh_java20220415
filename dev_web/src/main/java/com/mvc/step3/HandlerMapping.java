@@ -79,8 +79,18 @@ public class HandlerMapping {
 			if("login".equals(upmu[1])) {
 				//파라미터로 원본을 넘긴다
 				obj = controller.login(req, res);
-			} else if(obj instanceof String) {
+				if(obj instanceof String) {
 				return (String)obj;
+				}
+			}
+		}
+		else if("intro".equals(upmu[0])) {
+			controller = new AuthController();
+			if("clogin".equals(upmu[1])) {
+				obj = controller.clogin(req, res);
+				if(obj instanceof String) {
+					return (String)obj;
+				}
 			}
 		}
 		return obj;

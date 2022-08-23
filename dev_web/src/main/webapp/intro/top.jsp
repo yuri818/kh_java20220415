@@ -14,14 +14,14 @@
 	// 찜 상품은 최대 3일동안 보관된다고 한다. 이것의 의미는 뭘까?
 	// 3일 후에는 자동 비워지거나 삭제된다고 한다. - 시간을 관리하여 유지시키고 삭제시킬 수도 있다
 	// 이것들과 관련된 모든 api는 찾아보고 테스트 해볼 것.
-	/* String s_name = (String)session.getAttribute("s_name");
+	String s_name = (String)session.getAttribute("s_name");
 	Integer s_age = (Integer)session.getAttribute("s_age");
-	out.print("세션에 담김 값 둘: "+s_name+", "+s_age);
+	//out.print("세션에 담김 값 둘: "+s_name+", "+s_age);
 	Enumeration<String> snames = session.getAttributeNames();
 	while(snames.hasMoreElements()){
 		String name = snames.nextElement();
-		out.print(name+"<br/>");
-	} */
+		//out.print(name+"<br/>");
+	} 
 %>
 <body>
 <table border="1" borderColor="green" width="100%" height="100%">

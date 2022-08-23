@@ -9,7 +9,29 @@
 <body>
 <table border="1" borderColor="grey" width="100%" height="100%">
 	<tr>
-		<td align="left" valign="top">
+		<td valign="top" align="left">
+<%
+	if(c_name == null){
+%>
+			<form id="f_login" method="get" action="clogin.pj">
+			<table border="1" width="170px">
+				<tr>
+					<td><input type="text" name="mem_id" size="10"></td>
+					<td rowspan="2"><input type="button" value="로그인" onclick="login()"></td>
+				</tr>
+				<tr>
+					<td><input type="text" name="mem_pw" size="10"></td>
+				</tr>
+			</table>
+			</form>
+<%
+	} else {
+%>
+	<%= c_name %>님 환영합니다.
+	<input type="button" value="로그아웃" onclick="logout()">
+<%
+	}
+%>
 			<table>
 				<tr>
 					<td><a href="index.jsp?menu=intro">인트로</a></td>
