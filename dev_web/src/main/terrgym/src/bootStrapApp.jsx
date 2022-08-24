@@ -1,3 +1,4 @@
+import "./app.css";
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
@@ -40,6 +41,7 @@ function BootStrapApp(props) {
         </Container>
       </Navbar>
       {/* 헤더 영역  끝 */}
+      <div className="main-bg"></div>
       <Routes>
         <Route path="/" element={<div>홈페이지 입니다.</div>} />
         <Route path="/shoes/:id/:name" element={<ShoesPage />} />
