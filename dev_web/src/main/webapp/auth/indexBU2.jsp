@@ -15,9 +15,6 @@
     	function logout() {
     		location.href="./logout.jsp";
     	}
-    	function memberList(){
-    		
-    	}
     </script>
 </head>
 <body>
@@ -25,18 +22,12 @@
 	// DOM트리가 다 그려졌다면 -> function을 실행해주세요
 	// 만약에 ready를 쓰지 않겠다면 input태그의 id="tb"뒤에 스크립트 적어주면 위치문제 해결
 	$(document).ready(function(){
-		$("#dg_member").datagrid({
-			columns:[[
-				{field:'mem_id', title:'아이디', width:100},
-				{field:'mem_name', title:'이름', width:120},
-				{field:'mem_address', title:'주소', width:200}
-			]]
-			,data:[
-				{mem_id:'tomato', mem_name:'토마토', mem_address:'서울시 강남구 역삼동'}
-			   ,{mem_id:'apple', mem_name:'사과', mem_address:'서울시 송파구 잠실동'}
-			   ,{mem_id:'banana', mem_name:'바나나', mem_address:'제주시'}
-			]
-		});
+		$("#tre_gym_easyui_tree_2 span").click(function(){
+			alert("여기");
+		})
+		$( ".member li" ).click(function(e) {
+			alert( "call: "+e.target.textContent );
+			});
 	});
 </script>
     <div style="margin:20px 0;"></div>
@@ -146,11 +137,11 @@
         </div>
         	
         <div data-options="region:'center',title:'TerrGYM System',iconCls:'icon-ok'">
-     		<div style="margin:5px 0;"></div>
-     		HOME > 회원관리 > 회원목록
-     		<hr>
-     		<div style="margin: 20px 0;"></div>
-     		<div id="dg_member"></div>
+     		<p style="margin: 20px 10px;">
+     		여기는 터짐 시스템 입니다.<br>
+     		로그인 후 사용하세요<br>
+     		</p>
+     		<div id="d_memberList">회원목록</div>
         </div>
     </div>
  
