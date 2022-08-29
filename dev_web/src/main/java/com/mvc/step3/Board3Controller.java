@@ -23,6 +23,10 @@ import com.util.HashMapBinder;
 // HandlerMapping 클래스의 메소드 호출할 때 파라미터를 통해 원본을 가져올 수 있다
 public class Board3Controller implements Controller3 {
 	Logger logger = Logger.getLogger(Board3Controller.class);
+	// 전변은 인스턴스변수.변수명으로 호출이 가능하다
+	// 왜 인스턴스화를 했나?? - 전변호출, 메소드호출가능
+	// 미리 인스턴스화 해준다 - Board3Controller가 생성될 때 같이 메모리에 로딩이 미리 된다
+	// 바로 이 대목에서 Spring역할이 있따. - 객체 라이프 사이클 관리해줌
 	Board3Logic boardLogic = new Board3Logic();
 	@Override
 	public Object boardUpdate(HttpServletRequest req, HttpServletResponse res) {
@@ -110,6 +114,16 @@ public class Board3Controller implements Controller3 {
 	}
 	@Override
 	public Object login(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object clogin(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object memberList(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
