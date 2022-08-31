@@ -12,8 +12,8 @@ public class JDBCTemplate {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	public static final String _DRIVER = "oracle.jdbc.driver.OracleDriver";
-	public static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
-	public static final String user = "scott";
+	public static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl11";
+	public static final String user = "hr";
 	public static final String pw = "tiger";
 	public static JDBCTemplate getInstance() {
 		if(jdbcTemplate == null) {
@@ -40,7 +40,7 @@ public class JDBCTemplate {
 			if(pstmt != null) pstmt.close();
 			if(con != null) con.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// TODO: handle exception
 		}
 	}
 	public void close(Connection con, Statement stmt, ResultSet rs) {

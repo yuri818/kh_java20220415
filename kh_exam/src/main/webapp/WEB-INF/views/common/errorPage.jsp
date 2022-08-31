@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isErrorPage="true" %>
+    pageEncoding="UTF-8"%>
 <%
-String msg = (String)request.getAttribute("msg");
-out.print("request.getContextPath(): "+request.getContextPath());
-%>
+	String msg = (String)request.getAttribute("msg");
+	out.print("request.getContextPath():"+request.getContextPath());
+%>    
 <!DOCTYPE html>
 <html>
 <head>
