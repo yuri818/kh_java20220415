@@ -45,7 +45,7 @@ public class MemberController implements Controller3 {
 		logger.info("memberList 호출 성공");
 		// ModelAndView 객체를 설계함에 따라서 req가 없어도 조회결과를 담을 수 있게 되었다 - 의미
 		Map<String, Object> pMap = new HashMap<>();
-		HashMapBinder hmb = new HashMapBinder(req);
+		HashMapBinder hmb = new HashMapBinder(req); // 듣는 부분
 		hmb.bind(pMap);
 		// 생성자 파라미터로 req넘겨주지 않으면 NullPointerException 발생
 		ModelAndView mav = new ModelAndView(req);
