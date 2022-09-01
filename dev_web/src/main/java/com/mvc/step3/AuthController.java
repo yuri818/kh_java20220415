@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.util.HashMapBinder;
+import com.vo.MemberVO;
 // 메소드가 좌중괄호와 우중괄호로 묶여있는 것만으로도 구현한 것과 동일함
 public class AuthController implements Controller3 {
 	Logger logger = Logger.getLogger(AuthController.class);
@@ -22,9 +23,11 @@ public class AuthController implements Controller3 {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		String s_name = null;
+		MemberVO mVO = null;
 //		HttpSession session = req.getSession();
-		s_name = authLogic.login(pMap);
+		mVO = authLogic.login(pMap);
+		String s_name = null;
+		s_name = mVO.getMem_name();
 		Cookie c = new Cookie("c_name",s_name);
 		c.setPath("/");
 		c.setMaxAge(60*3); //3분
@@ -41,10 +44,11 @@ public class AuthController implements Controller3 {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		String s_name = null;
+		MemberVO mVO = null;
 		HttpSession session = req.getSession();
-		s_name = authLogic.login(pMap);
-		session.setAttribute("s_name", s_name);
+		mVO = authLogic.login(pMap);
+		session.setAttribute("mVO", mVO);
+		// sendRedirect로 이동해도 괜찮아 - 유지가 된다 -> 세션값이 유지
 		String path = "redirect:index.jsp";
 		return path;
 	}
