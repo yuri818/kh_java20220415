@@ -18,7 +18,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
  * 산업과 관련된 테이블의 컬럼 수는 100개 이상 200개 인 것도 다반사임
  * 따라서 스프링과 같은 프레임워크에서는 반복되는 코드를 줄이기 위한 유틸 기능의 클래스도 지원함
  */
-
+// HashMapBinder쓰는 이유?? 헤더에 담아주려고
 public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
@@ -33,7 +33,7 @@ public class HashMapBinder {
 	
 	public HashMapBinder (HttpServletRequest req) {
 		this.req = req;
-		realFolder = "D:\\git_20220415\\kh_java20220415\\dev_web\\src\\main\\webapp\\pds";
+		realFolder = "C:\\Users\\Lenovo\\git\\kh_java20220415\\dev_web\\src\\main\\webapp\\pds";
 	}
 	public void multiBind(Map<String,Object> pMap) {
 		pMap.clear();

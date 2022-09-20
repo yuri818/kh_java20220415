@@ -12,11 +12,17 @@ import com.util.MyBatisCommonFactory;
 public class Board3MDao {
 	Logger logger = Logger.getLogger(Board3MDao.class);
 	// 물리적인 DB서버와 연결
+	// spring SqlSessionFactoryBean
 	SqlSessionFactory sqlSessionFactory = null;
 	// 쿼리문 요청과 커밋 그리고 롤백 처리
-	SqlSession sqlSession = null;
+	// spring SqlSessionTemplate
+	static SqlSession sqlSession = null;
 
 	public Board3MDao() {
+		// 전통적인 역할 : 초기화
+		// myBatis레이어 설정 필요
+		// MapperConfig.xml(밴더정보, URL, username, password)
+		// 조립기역할 (객체주입)
 		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
 	}
 
