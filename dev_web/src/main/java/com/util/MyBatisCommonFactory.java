@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
  *  		(어노테이션은 2.5부터 제공은 됨 - 많이 부족함 - servlet에 의존적이다-별로임)
  *  어노테이션설정 - 자바설정 - 메이븐방식, 그레이들방식(코틀린사용-2019구글공식 인정-jetbrain)
  *  
+ *  나는 공통코드를 만들 수 있다|없다
+ *  클래스 조립기 처리 - 생성자 활용[static고려]
  * 
  */
 public class MyBatisCommonFactory {
@@ -35,10 +37,20 @@ public class MyBatisCommonFactory {
 	// 인스턴스화 5가지 유형
 	public static void init() {
 		try {
+			//@ComponentScan - xml 문서 정보수집
 			String resource = "com/mybatis/MapperConfig.xml";
-			Reader reader = Resources.getResourceAsReader(resource);
+			// IO패키지를 이용해서 읽어들임 - POJO방식 - 자원관리 책임이 개발자에게 있다.
+			// 순제어 <-> 역제어, 제어역전(스프링)
+			Reader reader = Resources.getResourceAsReader(resource); //IO
 			logger.info("before sqlSessionFactory : "+sqlSessionFactory);
-			if(sqlSessionFactory == null) { // 널이 아닐때만 객체주입을 새로 받는다(원본을 받는다, 복사본x)
+			// 싱글톤 패턴 - 사용자 정의 방식 처리하기 - 프레임워크를 만들 수도 있다. - 서블릿(HttpServlet상속)과 JSP
+			// 전통적인 방식 - A a = new A();-이른 인스턴스화(위치:선언부-멤버);	ApplicationContext, Annotation (스프링 컨테이너)
+			// A a = null; 선언부 a = new A(); 생성부 -> 게으른 인스턴스화 비유;	BeanFactory 컨테이너
+			
+			if(sqlSessionFactory == null) { // 널인 경우에만 객체주입을 새로 받는다(원본을 받는다, 복사본x) -> 조건에 따라 객체를 생성하는 것 -> 관리하기
+				// 생성자 뒤에 메소드가 호출됨
+				// 왜지? @ComponentScan 없죠, 객체관리도 직접 해야됨, xml 문서에 적힌 문자열을 Read해야함
+				// 두번째 파라미터는 id이다.
 				sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader,"development");
 			}
 			logger.info("after sqlSessionFactory : "+sqlSessionFactory);

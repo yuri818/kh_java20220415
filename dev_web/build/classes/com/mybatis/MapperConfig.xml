@@ -9,13 +9,19 @@
 			<property name="driver"
 				value="oracle.jdbc.OracleDriver" />
 			<property name="url"
-				value="jdbc:oracle:thin:@localhost:1521:orcl" />
+				value="jdbc:oracle:thin:@localhost:1521:orcl11" />
 			<property name="username" value="scott" />
 			<property name="password" value="tiger" />
 		</dataSource>
 		</environment>
 	</environments>
 	<mappers>
+	<!-- 매퍼 파일명이 달라도 아이디가 같으면 충돌이 발생함. 스캔
+		결론: id는 유일해야 함
+	쿼리문을 담고있는 xml파일의 물리적인 위치
+	 -->
+		<mapper resource="com/mybatis/mapper/emp.xml" />
+		<mapper resource="com/mybatis/mapper/dept.xml" />
 		<mapper resource="com/mybatis/mapper/board.xml" />
 		<mapper resource="com/mybatis/mapper/auth.xml" />
 		<mapper resource="com/mybatis/mapper/member.xml" />

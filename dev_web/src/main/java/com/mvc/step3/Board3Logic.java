@@ -30,7 +30,9 @@ public class Board3Logic {
 	
 	public int boardInsert(Map<String, Object> pMap) {
 		logger.info("boardInsert 호출 성공");
+		// board_master_t에 입력 성공시 담기
 		int result = 0;
+		int result2 = 0;
 		int b_no = 0;
 		int b_group = 0;
 		// 글 번호 채번 -> 한번호출
@@ -62,9 +64,16 @@ public class Board3Logic {
 		if(pMap.get("bs_file")!=null && pMap.get("bs_file").toString().length()>1) {
 			pMap.put("b_no", b_no);
 			pMap.put("bs_seq", 1);
-			int result2 = boardSDao.boardSInsert(pMap);
+			result2 = boardSDao.boardSInsert(pMap);
 			logger.info("result2가 1이면 등록 성공====> "+result2);
 		}
+		// 트랜잭션 처리 위해 넣은 부분 - Dao에서 static으로 만들고 하기..
+		// 부모에서 자식으로 내리는건 가능함. 그러나 반대는 불가함(리액트->리덕스-->NextJS)
+		// 백엔드에서는 전혀 문제가 되지 않음 - static으로 해결함 - POJO의 한계 -> Spring, Spring boot에서 해결
+		/*
+		 * if((result == 1) && (result2 == 1)) { Board3MDao.sqlSession.commit(); } else
+		 * { Board3MDao.sqlSession.rollback(); }
+		 */
 		return result;
 	}
 

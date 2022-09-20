@@ -107,6 +107,15 @@ public class HandlerMapping {
 				}
 			}
 		}
+		else if("emp".equals(upmu[0])) {
+			controller = new EmpController();
+			if("doEmp".equals(upmu[1])) {
+				obj = controller.doEmp(req, res);
+				if(obj instanceof String) {
+					return (String)obj;
+				}
+			}
+		}
 		return obj;
 	}
 }

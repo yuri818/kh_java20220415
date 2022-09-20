@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 // 메소드 뒤에 좌중과호 우중괄호가 없다 - 세미콜론으로 끝났다 - 추상메소드
 // 명세서이다 - 반드시 구현해 주었으면 해
 // 같이 사용할 수 있다 - 통일감
+// 새로고침 - 조회 - 명세서이다
 public interface Controller3 {
 	// 리턴타입이 ModelAndView 이다
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> rMap);
@@ -18,9 +19,10 @@ public interface Controller3 {
 	public Object login(HttpServletRequest req, HttpServletResponse res);
 	// 쿠키 로그인 추상 메소드 선언
 	public Object clogin(HttpServletRequest req, HttpServletResponse res);
-	// 회원관리 메소드 시작
+	// 회원관리 추상메소드 시작
 	public Object memberList(HttpServletRequest req, HttpServletResponse res);
-	// 새로고침 - 조회 - 명세서이다
+	public Object doEmp(HttpServletRequest req, HttpServletResponse res);
+	// 게시판 추상메소드 시작
 	public Object boardList(HttpServletRequest req, HttpServletResponse res);
 	public Object boardDetail(HttpServletRequest req, HttpServletResponse res);
 	public Object boardInsert(HttpServletRequest req, HttpServletResponse res);
